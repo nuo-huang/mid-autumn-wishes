@@ -1,0 +1,3 @@
+[functions.guestbook]
+# 公共匿名留言接口；数据库不直接开放写入，校验和限流在函数及 SQL 中完成。
+verify_jwt = false

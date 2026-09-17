@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a1720">
+<meta name="description" content="借一轮明月，把祝福寄给你。打开这封中秋月夜来信。">
+<title>把月光寄给你 · 孔明灯月夜</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<canvas id="atmosphere" aria-hidden="true"></canvas>
+<div class="page">
+ <header class="topbar">
+  <div class="brand"><span class="brand-mark" aria-hidden="true"></span>月夜来信</div>
+  <div class="top-right"><span class="date">农历 · 八月十五</span><button class="motion" id="motion" type="button" aria-label="暂停动态效果" aria-pressed="false"><svg class="pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m9 5 10 7-10 7Z"/></svg></button></div>
+ </header>
+ <main class="main">
+  <section class="intro" aria-labelledby="title"><p class="eyebrow">一轮明月 · 一份惦念</p><h1 id="title">把月光<br><span>寄给你</span></h1><p class="subtitle">山河远阔，总有人与你共此时。</p></section>
+  <div class="scene" id="scene" role="img" aria-label="金色明月下，孔明灯缓缓升起，云雾轻轻流动；开启祝福后粒子会聚成爱心">
+   <div class="halo"></div><div class="orbit"></div><div class="orbit two"></div>
+   <div class="moon" aria-hidden="true"><svg viewBox="0 0 300 300"><defs><radialGradient id="moonBase" cx="36%" cy="30%" r="76%"><stop stop-color="#fff2c5"/><stop offset=".55" stop-color="#f0d69a"/><stop offset="1" stop-color="#c7994d"/></radialGradient><filter id="texture"><feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="4" seed="28"/><feColorMatrix type="saturate" values="0"/><feBlend in="SourceGraphic" mode="multiply"/></filter><radialGradient id="crater"><stop stop-color="#9b783b" stop-opacity=".24"/><stop offset=".8" stop-color="#b28e4d" stop-opacity=".1"/><stop offset="1" stop-color="#c7a35e" stop-opacity="0"/></radialGradient></defs><circle cx="150" cy="150" r="150" fill="url(#moonBase)"/><g fill="url(#crater)"><ellipse cx="103" cy="88" rx="51" ry="42"/><ellipse cx="71" cy="141" rx="35" ry="46"/><ellipse cx="125" cy="142" rx="38" ry="30"/><ellipse cx="173" cy="87" rx="30" ry="43"/><ellipse cx="202" cy="194" rx="42" ry="34"/><ellipse cx="115" cy="232" rx="32" ry="36"/></g><circle cx="150" cy="150" r="150" filter="url(#texture)" opacity=".19" fill="#e9d1a0"/><g fill="none" stroke="#fff2ce" opacity=".16"><circle cx="202" cy="212" r="19"/><circle cx="70" cy="182" r="12"/><circle cx="225" cy="119" r="8"/></g></svg></div>
+   <span class="moon-label">人间至味是团圆</span><span class="star s1">✦</span><span class="star s2">✧</span><span class="star s3">✦</span>
+   <canvas id="particles" aria-hidden="true"></canvas><div class="heart-note" aria-hidden="true"><strong>中秋快乐</strong><span>月满 · 人安 · 常相念</span></div><span class="seal" aria-hidden="true">团圆</span><div class="scene-caption" id="caption">一盏灯火，寄一份团圆</div>
+  </div>
+  <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
+ </main>
+ <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。留言公开可见，请勿填写私密信息。这里展示最近 50 条祝福。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></section>
+ <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
+</div>
+<dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script id="card-data" type="application/json">{"to":"亲爱的你","message":"愿你所念皆团圆，所行皆坦途。\n愿日子如月光，温柔又明亮。","from":"惦念你的人"}</script>
+<script src="config.js"></script>
+<script src="message-api.js"></script>
+<script src="animations.js"></script>
+<script src="guestbook.js"></script>
+</body>
+</html>

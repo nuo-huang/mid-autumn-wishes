@@ -1,0 +1,9 @@
+data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+supabase/.temp/
+.env
+.env.*
+*.zip
+node_modules/

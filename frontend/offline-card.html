@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-standalone="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a1720">
+<meta name="description" content="借一轮明月，把祝福寄给你。打开这封中秋月夜来信。">
+<title>把月光寄给你 · 孔明灯月夜</title>
+<style>
+
+:root{color-scheme:dark;--night:#0a1720;--gold:#e9c889;--cream:#f8ecd4;--muted:#a6b3b8;--line:rgba(233,200,137,.22);font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--night);color:var(--cream);min-width:280px}button,input,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:5px}button:disabled{cursor:wait;opacity:.65}button{touch-action:manipulation}button svg{width:18px;height:18px;flex-shrink:0}svg{display:block}::selection{background:#8e6a36;color:#fff}body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 76% 36%,#203d454f,transparent 49%),radial-gradient(ellipse at 4% 100%,#21526438,transparent 54%)}
+#rain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.53;z-index:0}.page{position:relative;max-width:1160px;min-height:100svh;margin:auto;padding:30px 48px 24px;display:flex;flex-direction:column}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:3px}.brand-mark{height:31px;width:31px;border:1px solid var(--gold);border-radius:50%;position:relative}.brand-mark::after{content:"";position:absolute;inset:6px;border:1px solid var(--gold);border-radius:50%;transform:translateX(-4px);background:var(--night)}.top-right{display:flex;align-items:center;gap:22px}.date{font-size:11px;color:var(--muted);letter-spacing:2px}.motion{border:1px solid var(--line);background:#0c1b24a3;color:var(--gold);border-radius:50%;width:44px;height:44px;display:grid;place-items:center}.motion .play{display:none}.motion[aria-pressed="true"] .pause{display:none}.motion[aria-pressed="true"] .play{display:block}
+.main{flex:1;display:grid;grid-template-columns:1fr 1.15fr;align-content:center;align-items:center;column-gap:25px;padding:45px 0 30px}.intro{grid-column:1;grid-row:1}.eyebrow{font-size:11px;letter-spacing:5px;color:var(--gold);display:flex;align-items:center;gap:13px;margin:0 0 25px}.eyebrow::before{content:"";height:1px;width:28px;background:var(--gold)}h1{font-family:"Songti SC","STSong","SimSun",serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.35;letter-spacing:8px;margin:0}h1 span{color:var(--gold)}.subtitle{color:var(--muted);font-size:13px;letter-spacing:3px;line-height:2;margin:20px 0 0}
+.scene{position:relative;grid-column:2;grid-row:1 / 3;height:490px;min-width:0;isolation:isolate}.halo{position:absolute;inset:2%;border-radius:50%;background:radial-gradient(circle,#efc87a13 0%,#e3bb6e08 35%,transparent 65%)}.orbit{position:absolute;left:50%;top:45%;width:90%;aspect-ratio:1;border:1px solid #daba6f19;border-radius:50%;transform:translate(-50%,-50%)}.orbit::after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);top:14%;right:14%;box-shadow:0 0 12px var(--gold)}.orbit.two{width:76%;border-style:dashed;opacity:.4;transform:translate(-50%,-50%) rotate(35deg)}.moon{position:absolute;top:45%;left:50%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#f4da9e;box-shadow:0 0 45px #f7d18b24,0 0 110px #f7d18b13,inset -12px -9px 25px #b58033;transition:opacity 1.3s,filter 1.3s;overflow:hidden}.moon svg{width:100%;height:100%}.moon::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 4px 3px 18px #fff3c999,inset -12px -4px 22px #74501a40}.scene.active .moon{opacity:.12;filter:blur(5px)}.scene.active .orbit{opacity:.32}.moon-label{position:absolute;right:5%;top:16%;writing-mode:vertical-rl;font-family:"Songti SC","SimSun",serif;font-size:12px;letter-spacing:5px;color:#cebd98}.moon-label::before{content:"";display:inline-block;width:1px;height:28px;background:var(--line);margin-bottom:15px}.star{position:absolute;color:var(--gold);font-size:15px;animation:twinkle 3s infinite alternate}.s1{top:15%;left:17%}.s2{top:72%;right:15%;font-size:10px;animation-delay:-1s}.s3{top:65%;left:9%;font-size:8px;animation-delay:-2s}#particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.heart-note{position:absolute;top:45%;left:12%;right:12%;transform:translateY(-30%);text-align:center;opacity:0;transition:opacity 1s;pointer-events:none}.heart-note strong{display:block;font-family:"Songti SC","SimSun",serif;letter-spacing:6px;font-size:clamp(22px,3vw,34px);font-weight:400;text-shadow:0 0 18px #edc98180}.heart-note span{display:block;font-size:10px;letter-spacing:4px;color:var(--gold);margin-top:12px}.scene.complete .heart-note{opacity:1}.scene-caption{position:absolute;bottom:2%;width:100%;text-align:center;font-family:"Songti SC","SimSun",serif;font-size:13px;letter-spacing:5px;color:#b3aa91}.scene-caption::before,.scene-caption::after{content:"";display:inline-block;width:22px;height:1px;vertical-align:middle;background:var(--line);margin:0 14px}.seal{position:absolute;bottom:14%;left:48%;border:1px solid #b8714f;color:#cb8b65;writing-mode:vertical-rl;padding:5px 4px;font-family:"Songti SC","SimSun",serif;font-size:11px;letter-spacing:3px;transform:rotate(-5deg)}
+.letter{grid-column:1;grid-row:2;padding-top:33px;min-width:0}.to{font-family:"Songti SC","SimSun",serif;color:var(--gold);font-size:16px;letter-spacing:2px;margin:0 0 12px;overflow-wrap:anywhere}.message{white-space:pre-wrap;font-size:14px;line-height:2.1;letter-spacing:1px;color:#d6dedc;margin:0;overflow-wrap:anywhere}.signature{font-size:11px;letter-spacing:2px;color:var(--muted);margin:14px 0 28px;overflow-wrap:anywhere}.actions{display:flex;gap:12px;flex-wrap:wrap}.primary{border:1px solid #f4d89f;background:linear-gradient(120deg,#f6dfae,#ddba79);box-shadow:0 5px 22px #d6b06510;color:#29302d;border-radius:6px;min-height:50px;padding:0 26px;display:inline-flex;justify-content:center;align-items:center;gap:12px;font-size:13px;letter-spacing:2px;transition:transform .2s,box-shadow .2s}.primary:hover{box-shadow:0 5px 24px #d6b06530;transform:translateY(-2px)}.secondary{min-height:50px;padding:0 20px;border:1px solid var(--line);border-radius:6px;background:#12232b66;color:var(--cream);font-size:12px;letter-spacing:2px}.hint{font-size:10px;letter-spacing:2px;color:#83969b;margin:14px 0 0;min-height:18px}.footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:19px;border-top:1px solid var(--line)}.footer p{font-size:10px;letter-spacing:2px;color:#8d9fa3;line-height:1.8;margin:0}.download{border:0;color:var(--gold);padding:8px 0 8px 12px;min-height:44px;background:transparent;display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1px;white-space:nowrap}.toast{position:fixed;bottom:max(25px,env(safe-area-inset-bottom));left:50%;transform:translate(-50%,12px);width:max-content;max-width:calc(100% - 40px);padding:13px 20px;border:1px solid #e9c88950;border-radius:8px;background:#20333a;color:var(--cream);box-shadow:0 10px 40px #0006;font-size:13px;z-index:20;opacity:0;pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:translate(-50%,0)}
+dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:28px;background:#10232b;color:var(--cream);border:1px solid #e9c88955;border-radius:16px;box-shadow:0 20px 100px #0008}dialog::backdrop{background:#020c13b8;backdrop-filter:blur(5px)}.dialog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}dialog h2{font-family:"Songti SC","SimSun",serif;letter-spacing:3px;font-size:24px;font-weight:400;margin:0}.close{width:44px;height:44px;border:0;background:transparent;color:var(--muted);font-size:27px}.dialog-desc{font-size:12px;line-height:1.8;color:var(--muted);margin:0 0 22px}label{display:block;font-size:12px;letter-spacing:1px;margin:15px 0 8px;color:var(--gold)}input,textarea{width:100%;border:1px solid #566365;background:#07192180;color:var(--cream);border-radius:6px;padding:12px;font-size:16px;outline:none}input:focus,textarea:focus{border-color:var(--gold)}textarea{resize:vertical;min-height:108px;line-height:1.7}.form-actions{display:flex;gap:10px;margin-top:23px}.form-actions .primary{flex:1}.form-tip{font-size:11px;color:var(--muted);line-height:1.7;margin:15px 0 0}.paused .star{animation-play-state:paused}@keyframes twinkle{from{opacity:.25;transform:scale(.75)}to{opacity:.85;transform:scale(1.05)}}
+.moon-label,.seal{transition:opacity .7s}.scene.active .moon-label,.scene.active .seal{opacity:0}
+#atmosphere{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.page{z-index:1}.intro,.letter,.topbar,.footer{text-shadow:0 2px 12px #07131b,0 0 5px #07131b}
+.guestbook{margin:18px 0 28px;padding:25px;border:1px solid var(--line);border-radius:12px;background:#0a1a23dc;min-width:0}.guestbook-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.guestbook h2{font-family:"Songti SC","SimSun",serif;font-size:24px;font-weight:400;letter-spacing:3px;margin:0}.guestbook-note,.guestbook-status{font-size:12px;line-height:1.8;color:var(--muted)}.guestbook form{display:grid;grid-template-columns:180px 1fr;gap:0 16px}.guestbook label{margin-top:10px}.guestbook textarea{min-height:88px}.guestbook .send-row{grid-column:1/-1;display:flex;align-items:center;gap:16px;margin-top:14px}.guestbook-status{margin:0;flex:1}.guestbook-list{list-style:none;padding:0;margin:24px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:12px}.guestbook-list li{padding:15px;border:1px solid #e9c88918;border-radius:8px;background:#14293285;min-width:0}.guestbook-list strong{font-size:13px;color:var(--gold);overflow-wrap:anywhere}.guestbook-list time{display:block;font-size:10px;color:var(--muted);margin-top:4px}.guestbook-list p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:13px;margin:10px 0 0}.guestbook-list .empty{grid-column:1/-1;color:var(--muted);font-size:13px}.guestbook button:disabled{cursor:not-allowed}.guestbook .refresh{min-height:44px}.guestbook input:disabled,.guestbook textarea:disabled{opacity:.55}@media(max-width:759px){.guestbook{padding:18px;margin-top:0}.guestbook h2{font-size:21px;letter-spacing:2px}.guestbook form,.guestbook-list{grid-template-columns:1fr}.guestbook .send-row{align-items:flex-start;flex-direction:column;gap:10px}.guestbook .send-row .primary{width:100%}.guestbook .refresh{padding:0 12px;font-size:10px}.guestbook-note{font-size:11px}}
+@media(min-width:760px) and (min-height:850px){.page{padding-top:45px;padding-bottom:35px}.main{max-height:900px;width:100%;margin:auto}.scene{height:560px}}
+@media(max-width:759px){.page{padding:18px 25px max(14px,env(safe-area-inset-bottom));max-width:520px}.brand{font-size:11px;letter-spacing:2px;gap:9px}.brand-mark{width:25px;height:25px}.date{font-size:10px;letter-spacing:1px}.top-right{gap:12px}.motion{width:44px;height:44px}.main{display:flex;flex-direction:column;padding:27px 0 24px;gap:0}.intro{text-align:center;width:100%}.eyebrow{justify-content:center;font-size:9px;letter-spacing:4px;margin-bottom:12px}.eyebrow::before{width:18px}h1{font-size:39px;letter-spacing:6px;line-height:1.35}h1 br{display:none}h1 span{display:block}.subtitle{font-size:11px;letter-spacing:2px;margin-top:12px}.scene{width:100%;height:auto;aspect-ratio:1.15;margin:1px 0 0}.moon{width:55%}.orbit{width:78%}.orbit.two{width:68%}.moon-label{right:9%;top:17%;font-size:10px}.seal{bottom:12%;font-size:9px}.scene-caption{bottom:0;font-size:10px;letter-spacing:3px}.scene-caption::before,.scene-caption::after{width:16px;margin:0 10px}.heart-note strong{font-size:25px}.heart-note span{font-size:8px;letter-spacing:3px;margin-top:9px}.letter{width:100%;text-align:center;padding-top:25px}.to{font-size:14px;letter-spacing:1px;margin-bottom:7px}.message{font-size:12px;line-height:2;letter-spacing:1px}.signature{font-size:10px;margin:10px 0 22px}.actions{justify-content:center;gap:10px;flex-wrap:nowrap}.primary{min-height:48px;padding:0 22px;font-size:12px;letter-spacing:1px}.secondary{min-height:48px;padding:0 17px;font-size:11px;letter-spacing:1px}.hint{font-size:9px;letter-spacing:1px;margin-top:11px}.footer{padding-top:12px;gap:8px}.footer p{font-size:9px;letter-spacing:1px}.download{font-size:10px;gap:5px}.download svg{width:15px}.s1{left:19%}.s2{right:15%}.s3{left:12%}}
+@media(max-width:359px){.page{padding-left:18px;padding-right:18px}.date{display:none}h1{font-size:34px}.scene{aspect-ratio:1.13}.main{padding-top:20px}.primary{padding:0 16px}.secondary{padding:0 13px}.footer p{max-width:140px}.message{font-size:12px;letter-spacing:0}.letter{padding-top:19px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<canvas id="atmosphere" aria-hidden="true"></canvas>
+<div class="page">
+ <header class="topbar">
+  <div class="brand"><span class="brand-mark" aria-hidden="true"></span>月夜来信</div>
+  <div class="top-right"><span class="date">农历 · 八月十五</span><button class="motion" id="motion" type="button" aria-label="暂停动态效果" aria-pressed="false"><svg class="pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m9 5 10 7-10 7Z"/></svg></button></div>
+ </header>
+ <main class="main">
+  <section class="intro" aria-labelledby="title"><p class="eyebrow">一轮明月 · 一份惦念</p><h1 id="title">把月光<br><span>寄给你</span></h1><p class="subtitle">山河远阔，总有人与你共此时。</p></section>
+  <div class="scene" id="scene" role="img" aria-label="金色明月下，孔明灯缓缓升起，云雾轻轻流动；开启祝福后粒子会聚成爱心">
+   <div class="halo"></div><div class="orbit"></div><div class="orbit two"></div>
+   <div class="moon" aria-hidden="true"><svg viewBox="0 0 300 300"><defs><radialGradient id="moonBase" cx="36%" cy="30%" r="76%"><stop stop-color="#fff2c5"/><stop offset=".55" stop-color="#f0d69a"/><stop offset="1" stop-color="#c7994d"/></radialGradient><filter id="texture"><feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="4" seed="28"/><feColorMatrix type="saturate" values="0"/><feBlend in="SourceGraphic" mode="multiply"/></filter><radialGradient id="crater"><stop stop-color="#9b783b" stop-opacity=".24"/><stop offset=".8" stop-color="#b28e4d" stop-opacity=".1"/><stop offset="1" stop-color="#c7a35e" stop-opacity="0"/></radialGradient></defs><circle cx="150" cy="150" r="150" fill="url(#moonBase)"/><g fill="url(#crater)"><ellipse cx="103" cy="88" rx="51" ry="42"/><ellipse cx="71" cy="141" rx="35" ry="46"/><ellipse cx="125" cy="142" rx="38" ry="30"/><ellipse cx="173" cy="87" rx="30" ry="43"/><ellipse cx="202" cy="194" rx="42" ry="34"/><ellipse cx="115" cy="232" rx="32" ry="36"/></g><circle cx="150" cy="150" r="150" filter="url(#texture)" opacity=".19" fill="#e9d1a0"/><g fill="none" stroke="#fff2ce" opacity=".16"><circle cx="202" cy="212" r="19"/><circle cx="70" cy="182" r="12"/><circle cx="225" cy="119" r="8"/></g></svg></div>
+   <span class="moon-label">人间至味是团圆</span><span class="star s1">✦</span><span class="star s2">✧</span><span class="star s3">✦</span>
+   <canvas id="particles" aria-hidden="true"></canvas><div class="heart-note" aria-hidden="true"><strong>中秋快乐</strong><span>月满 · 人安 · 常相念</span></div><span class="seal" aria-hidden="true">团圆</span><div class="scene-caption" id="caption">一盏灯火，寄一份团圆</div>
+  </div>
+  <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
+ </main>
+ <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。留言公开可见，请勿填写私密信息。这里展示最近 50 条祝福。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></section>
+ <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
+</div>
+<dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script id="card-data" type="application/json">{"to":"亲爱的你","message":"愿你所念皆团圆，所行皆坦途。\n愿日子如月光，温柔又明亮。","from":"惦念你的人"}</script>
+<script>
+// local：随附的 Node.js + SQLite；supabase：GitHub Pages + Supabase 云端接口。
+// 这里只能填写公开项目地址和 publishable key，绝不能填写 service_role / secret key。
+window.MOON_CONFIG = Object.freeze({
+  provider: 'local',
+  supabaseUrl: '',
+  publishableKey: ''
+});
+
+</script>
+<script>
+(() => {
+ 'use strict';
+ function connection(){
+  const config=window.MOON_CONFIG || {provider:'local'};
+  if(config.provider==='local')return {url:'/api/messages',headers:{}};
+  if(config.provider!=='supabase')throw new Error('未知的留言服务配置');
+  const project=new URL(config.supabaseUrl);
+  if(project.protocol!=='https:'||project.username||project.password||project.pathname!=='/'||project.search||project.hash)throw new Error('请填写有效的 Supabase HTTPS 项目地址');
+  const key=config.publishableKey;
+  if(typeof key!=='string'||!key.startsWith('sb_publishable_'))throw new Error('请填写 Supabase publishable key，不要使用管理密钥');
+  return {url:new URL('/functions/v1/guestbook',project).href,headers:{apikey:key}};
+ }
+ window.MoonMessages=Object.freeze({
+  async request({method='GET',body,signal}={}){
+   const {url,headers}=connection();
+   if(body!==undefined)headers['Content-Type']='application/json';
+   return fetch(url,{method,headers,body:body===undefined?undefined:JSON.stringify(body),signal,cache:'no-store',credentials:'omit'});
+  }
+ });
+})();
+
+</script>
+<script>
+
+(() => {
+ 'use strict';
+ // 保存初始文档；导出的贺卡不会带入动画中间状态。
+ const template = document.documentElement.dataset.standalone === 'true' ? '<!DOCTYPE html>\n' + document.documentElement.outerHTML : null;
+ const $ = id => document.getElementById(id);
+ const defaults = {to:'亲爱的你',message:'愿你所念皆团圆，所行皆坦途。\n愿日子如月光，温柔又明亮。',from:'惦念你的人'};
+ let card = {...defaults};
+ try { const data=JSON.parse($('card-data').textContent); for(const key of Object.keys(defaults)) if(typeof data[key]==='string') card[key]=data[key].slice(0,key==='message'?160:24); } catch (_) {}
+ function renderCard(){ $('to').textContent='致 · '+card.to; $('message').textContent=card.message; $('signature').textContent='—— '+card.from; }
+ renderCard();
+ const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+ let paused=reduced.matches, phase='idle', elapsed=0, phaseElapsed=0, number=3, last=0, raf=0;
+ const rain=$('rain'), rc=rain.getContext('2d'), canvas=$('particles'), ctx=canvas.getContext('2d');
+ const air=$('atmosphere'),ac=air.getContext('2d');
+ let vw=0,vh=0,w=0,h=0,dpr=1,stars=[],drops=[],points=[],sparks=[];
+ const chars=Array.from('中秋快乐月圆人安万事胜意幸福团圆');
+ const random=(a,b)=>a+Math.random()*(b-a);
+ // 预绘灯笼和可平铺雾带，逐帧仅移动贴图；所有循环共用 elapsed，暂停后续播不跳帧。
+ function lanternSprite(){
+  const sprite=document.createElement('canvas');sprite.width=160;sprite.height=208;
+  const c=sprite.getContext('2d');
+  const glow=c.createRadialGradient(80,128,5,80,118,79);
+  glow.addColorStop(0,'rgba(255,191,74,.35)');glow.addColorStop(.45,'rgba(250,142,49,.12)');glow.addColorStop(1,'rgba(250,142,49,0)');
+  c.fillStyle=glow;c.fillRect(0,0,160,208);
+  c.beginPath();c.moveTo(44,44);c.bezierCurveTo(54,30,106,30,116,44);c.bezierCurveTo(123,72,111,119,102,148);c.quadraticCurveTo(80,158,58,148);c.bezierCurveTo(49,120,37,72,44,44);c.closePath();
+  const paper=c.createLinearGradient(0,35,0,153);paper.addColorStop(0,'#ce6d36');paper.addColorStop(.3,'#e89b4d');paper.addColorStop(.75,'#f7c06c');paper.addColorStop(1,'#ffe7a3');
+  c.fillStyle=paper;c.fill();c.strokeStyle='rgba(255,224,158,.7)';c.lineWidth=1.1;c.stroke();
+  c.save();c.clip();const light=c.createRadialGradient(80,133,0,80,133,67);light.addColorStop(0,'rgba(255,247,183,.85)');light.addColorStop(1,'rgba(255,231,143,0)');c.fillStyle=light;c.fillRect(38,34,85,125);
+  c.strokeStyle='rgba(133,68,30,.26)';c.lineWidth=1.2;
+  for(const x of [57,80,103]){c.beginPath();c.moveTo(x,37);c.quadraticCurveTo(x+(x-80)*.23,90,80+(x-80)*.64,153);c.stroke();}
+  c.restore();
+  c.beginPath();c.ellipse(80,149,22,5,0,0,Math.PI*2);c.fillStyle='#9d522b';c.fill();c.strokeStyle='#f4cc87';c.stroke();
+  c.beginPath();c.moveTo(61,150);c.lineTo(99,150);c.moveTo(80,146);c.lineTo(80,158);c.strokeStyle='#e6ac61';c.stroke();
+  c.beginPath();c.moveTo(80,155);c.bezierCurveTo(66,147,78,140,79,132);c.bezierCurveTo(83,139,94,149,80,155);c.fillStyle='#fff4be';c.fill();
+  c.fillStyle='rgba(131,63,28,.66)';c.font='18px serif';c.textAlign='center';c.fillText('愿',80,99);
+  return sprite;
+ }
+ function mistSprite(){
+  const sprite=document.createElement('canvas');sprite.width=640;sprite.height=160;const c=sprite.getContext('2d');
+  // 每个云团在左右各补一份，首尾像素连续，平铺移动时没有接缝。
+  for(let i=0;i<19;i++){
+   const x=i*640/19,y=74+Math.sin(i*2.3)*22,rx=65+Math.sin(i*1.7)*25,ry=22+Math.cos(i*1.2)*9;
+   for(const shift of [-640,0,640]){
+    c.save();c.translate(x+shift,y);c.scale(rx,ry);const g=c.createRadialGradient(0,0,0,0,0,1);
+    g.addColorStop(0,'rgba(175,206,209,.17)');g.addColorStop(.4,'rgba(135,179,188,.1)');g.addColorStop(1,'rgba(117,161,174,0)');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();
+   }
+  }
+  return sprite;
+ }
+ const lanternArt=ctx?lanternSprite():null,mistArt=ctx?mistSprite():null;
+ const lanterns=[
+  {x:.12,offset:.22,duration:43,size:.17,alpha:.88},
+  {x:.85,offset:.52,duration:51,size:.12,alpha:.7},
+  {x:.24,offset:.73,duration:59,size:.09,alpha:.55},
+  {x:.73,offset:.08,duration:39,size:.19,alpha:.92},
+  {x:.09,offset:.88,duration:54,size:.10,alpha:.58},
+  {x:.92,offset:.31,duration:46,size:.14,alpha:.8},
+  {x:.64,offset:.83,duration:64,size:.075,alpha:.5},
+  {x:.34,offset:.02,duration:48,size:.11,alpha:.68},
+  {x:.45,offset:.38,duration:57,size:.09,alpha:.52},
+  {x:.58,offset:.65,duration:61,size:.11,alpha:.58},
+  {x:.03,offset:.57,duration:53,size:.12,alpha:.65},
+  {x:.97,offset:.12,duration:47,size:.15,alpha:.72}
+ ];
+ function cloudBand(y,speed,offset,opacity,scale){
+  const w=vw,h=vh;
+  const tileWidth=w*1.45,tileHeight=h*scale;
+  const shift=((elapsed*speed+offset)%tileWidth+tileWidth)%tileWidth;
+  ac.save();ac.globalAlpha=opacity;
+  for(let x=shift-tileWidth;x<w;x+=tileWidth)ac.drawImage(mistArt,x,y-tileHeight*.5,tileWidth,tileHeight);
+  ac.restore();
+ }
+ function atmosphere(){
+  // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
+  const w=vw,h=vh;
+  if(!ac)return;ac.clearRect(0,0,w,h);
+  cloudBand(h*.2,5,w*.18,.4,.3);
+  for(const [i,lamp] of lanterns.entries()){
+   const progress=(elapsed/(lamp.duration*1.65)+lamp.offset)%1;
+   const fade=Math.min(1,progress/.12,(1-progress)/.15);
+   const size=Math.min(w,h*1.1,700)*lamp.size*(1-progress*.24);
+   const x=w*lamp.x+Math.sin(elapsed*.23+i*1.9)*w*.024;
+   const y=h*(1.08-progress*1.2);
+   ac.save();ac.globalAlpha=lamp.alpha*fade;ac.translate(x,y);ac.rotate(Math.sin(elapsed*.32+i)*.065);
+   ac.drawImage(lanternArt,-size*.5,-size*.65,size,size*1.3);ac.restore();
+  }
+  cloudBand(h*.51,-7,w*.7,.5,.36);
+  cloudBand(h*.84,9,w*.31,.64,.3);
+ }
+ function fitCanvas(c,width,height){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);}
+ function resize(){
+  dpr=Math.min(devicePixelRatio||1,2);vw=innerWidth;vh=innerHeight;fitCanvas(rain,vw,vh);
+  const box=canvas.getBoundingClientRect();w=box.width;h=box.height;fitCanvas(canvas,w,h);
+  if(ac)fitCanvas(air,vw,vh);
+  stars=Array.from({length:Math.min(100,Math.floor(vw*vh/7000))},()=>({x:random(0,vw),y:random(0,vh),r:random(.5,1.3),o:random(.1,.7),p:random(0,7)}));
+  drops=Array.from({length:Math.ceil(vw/30)},(_,i)=>({x:i*30+random(-5,5),y:random(-vh,vh),speed:random(14,34),len:Math.floor(random(4,12)),seed:Math.floor(random(0,chars.length))}));
+  if(phase==='countdown') setTargets(String(number),true); else if(phase==='heart') setTargets('heart',true); else setTargets('moon',true);
+  draw(0);
+ }
+ function targets(kind){
+  const arr=[];const cx=w*.5,cy=h*.45;
+  if(kind==='heart'){
+   const scale=Math.min(w*.022,h*.027);
+   for(let i=0;i<600;i++){const t=i/600*Math.PI*2;const spread=random(.94,1.055);arr.push({x:cx+16*Math.pow(Math.sin(t),3)*scale*spread,y:cy-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*scale*spread});}
+  }else if(kind==='moon'){
+   for(let i=0;i<180;i++){const a=random(0,Math.PI*2),r=w*random(.29,.37);arr.push({x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*.88});}
+  }else{
+   const off=document.createElement('canvas');off.width=Math.ceil(w);off.height=Math.ceil(h);const c=off.getContext('2d');c.fillStyle='#fff';c.font='600 '+Math.floor(h*.52)+'px Georgia,serif';c.textAlign='center';c.textBaseline='middle';c.fillText(kind,cx,cy);
+   const data=c.getImageData(0,0,off.width,off.height).data;const step=Math.max(3,Math.round(w/105));
+   for(let y=0;y<off.height;y+=step)for(let x=0;x<off.width;x+=step)if(data[(y*off.width+x)*4+3]>120)arr.push({x,y});
+  }
+  return arr;
+ }
+ function setTargets(kind,instant=false){
+  const arr=targets(kind);points=arr.map((p,i)=>{const old=points[i%Math.max(points.length,1)];return {tx:p.x,ty:p.y,x:instant?p.x:(old?old.x:random(0,w)),y:instant?p.y:(old?old.y:random(0,h)),r:random(.65,1.6),seed:random(0,Math.PI*2)};});
+ }
+ function background(dt){
+  rc.clearRect(0,0,vw,vh);
+  for(const s of stars){rc.globalAlpha=s.o*(.7+.3*Math.sin(elapsed*.7+s.p));rc.fillStyle='#f6deac';rc.beginPath();rc.arc(s.x,s.y,s.r,0,Math.PI*2);rc.fill();}
+  rc.font='10px serif';rc.textAlign='center';
+  for(const d of drops){if(dt)d.y+=d.speed*dt*(phase==='countdown'?1.8:1);if(d.y-d.len*15>vh)d.y=-30;
+   for(let i=0;i<d.len;i++){const y=d.y-i*15;if(y<0||y>vh)continue;const edge=Math.abs(d.x-vw/2)/(vw/2);rc.globalAlpha=(1-i/d.len)*(phase==='countdown'?.34:.11)*(.25+.75*edge);rc.fillStyle=i===0?'#ffebbf':'#d9ba7b';rc.fillText(chars[(d.seed+i)%chars.length],d.x,y);}
+  }rc.globalAlpha=1;
+ }
+ function draw(dt){
+  if(!rc||!ctx)return;background(dt);ctx.clearRect(0,0,w,h);atmosphere();ctx.fillStyle='#f6d899';
+  const easing=1-Math.exp(-dt*6);const beat=phase==='heart'?1+Math.sin(elapsed*1.8)*.012:1;
+  for(const p of points){p.x+=(p.tx-p.x)*easing;p.y+=(p.ty-p.y)*easing;ctx.globalAlpha=phase==='idle'?.25+.32*Math.sin(elapsed+p.seed)**2:.68+.3*Math.sin(elapsed*1.5+p.seed)**2;const x=w/2+(p.x-w/2)*beat,y=h*.45+(p.y-h*.45)*beat;ctx.beginPath();ctx.arc(x,y,p.r,0,Math.PI*2);ctx.fill();}
+  ctx.globalAlpha=1;
+  for(let i=sparks.length-1;i>=0;i--){const p=sparks[i];p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=15*dt;if(p.life<=0){sparks.splice(i,1);continue;}ctx.globalAlpha=Math.min(1,p.life);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
+ }
+ function complete(instant=false){phase='heart';$('scene').classList.add('active','complete');setTargets('heart',instant);$('start').disabled=false;$('startText').textContent='再看一次月光';$('caption').textContent='愿你与所爱，岁岁共团圆';$('status').textContent='中秋快乐，愿灯火与月光捎去我的惦念';$('scene').setAttribute('aria-label','孔明灯与云雾之间，金色粒子组成爱心，中间写着中秋快乐');if(!instant)burst(w*.5,h*.45);draw(0);}
+ function tick(now){raf=0;if(paused||document.hidden)return;const dt=last?Math.min((now-last)/1000,.05):0;last=now;elapsed+=dt;
+  if(phase==='countdown'){phaseElapsed+=dt;if(phaseElapsed>=1.25){phaseElapsed-=1.25;number--;if(number===0)complete();else{setTargets(String(number));$('status').textContent='月光正在聚拢 · '+number;}}}
+  draw(dt);raf=requestAnimationFrame(tick);
+ }
+ function schedule(){if(!raf&&!paused&&!document.hidden){last=0;raf=requestAnimationFrame(tick);}}
+ function motionUI(){document.body.classList.toggle('paused',paused||document.hidden);$('motion').setAttribute('aria-pressed',String(paused));$('motion').setAttribute('aria-label',paused?'开启动态效果':'暂停动态效果');}
+ function setPaused(value){paused=value;motionUI();if(paused){cancelAnimationFrame(raf);raf=0;draw(0);}else schedule();}
+ $('motion').addEventListener('click',()=>setPaused(!paused));
+ $('start').addEventListener('click',()=>{
+  if(!ctx||!rc){$('status').textContent='中秋快乐，愿你与所爱岁岁团圆';return;}
+  $('scene').classList.remove('complete');$('scene').classList.add('active');
+  if(reduced.matches||paused){complete(true);return;}
+  phase='countdown';number=3;phaseElapsed=0;sparks=[];setTargets('3');$('start').disabled=true;$('startText').textContent='月光正在抵达';$('status').textContent='月光正在聚拢 · 3';$('scene').setAttribute('aria-label','金色粒子正在倒计时');schedule();
+ });
+ function burst(x,y){if(paused)return;for(let i=0;i<65;i++){const a=random(0,Math.PI*2),v=random(25,95);sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:random(.7,1.8),r:random(.8,2)});}sparks=sparks.slice(-160);}
+ $('scene').addEventListener('pointerdown',e=>{const rect=canvas.getBoundingClientRect();burst(e.clientX-rect.left,e.clientY-rect.top);});
+ document.addEventListener('visibilitychange',()=>{motionUI();if(document.hidden){cancelAnimationFrame(raf);raf=0;}else schedule();});
+ if(reduced.addEventListener)reduced.addEventListener('change',e=>{setPaused(e.matches);if(e.matches&&phase==='countdown')complete(true);});
+ let resizeTimer;addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(resize,120);});
+ let toastTimer;function toast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),4200);}
+ let wasPaused=false;
+ $('edit').addEventListener('click',()=>{$('recipient').value=card.to;$('greeting').value=card.message;$('sender').value=card.from;wasPaused=paused;setPaused(true);$('editor').showModal();});
+ function closeEditor(){$('editor').close();}
+ $('close').addEventListener('click',closeEditor);
+ $('editor').addEventListener('close',()=>setPaused(wasPaused));
+ $('editor').addEventListener('click',e=>{if(e.target===$('editor')){const b=$('editor').getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)closeEditor();}});
+ $('editForm').addEventListener('submit',e=>{e.preventDefault();card={to:$('recipient').value.trim()||defaults.to,message:$('greeting').value.trim()||defaults.message,from:$('sender').value.trim()||defaults.from};renderCard();closeEditor();toast('写好了，月光里有你的心意。');});
+ $('download').addEventListener('click',async()=>{
+  const button=$('download');button.disabled=true;
+  try {
+  let source=template;
+  if(!source){const response=await fetch(new URL('offline-card.html',location.href),{cache:'no-store'});if(!response.ok)throw new Error();source=await response.text();}
+  const json=JSON.stringify(card).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');
+  const html=source.replace(/(<script id="card-data" type="application\/json">)[\s\S]*?(<\/script>)/,(_all,open,close)=>open+json+close);
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='中秋快乐-孔明灯月夜.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('已生成网页文件，请在浏览器下载中查看。');
+  }catch{toast('暂时无法保存，请检查网络后重试。');}finally{button.disabled=false;}
+ });
+ if(ctx&&rc){resize();motionUI();schedule();}else{$('motion').hidden=true;$('status').textContent='月色与你，皆是温柔。';}
+})();
+
+</script>
+<script>
+(() => {
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ // 通过统一连接层读写；离线贺卡不连接数据库。
+ const online=/^https?:$/.test(location.protocol);let activeLoad=null,sending=false,lastMessages='',loadedOnce=false,currentMessages=[];
+ function guestStatus(text){$('guestbookStatus').textContent=text;}
+ function renderMessages(messages){
+  const key=JSON.stringify(messages);if(key===lastMessages)return;lastMessages=key;currentMessages=messages;
+  const list=$('guestbookList');list.replaceChildren();
+  if(!messages.length){const item=document.createElement('li');item.className='empty';item.textContent='还没有留言，来留下第一份祝福吧。';list.appendChild(item);return;}
+  for(const message of messages){const item=document.createElement('li'),name=document.createElement('strong'),time=document.createElement('time'),body=document.createElement('p');name.textContent=message.name;time.dateTime=message.createdAt;time.textContent=new Date(message.createdAt).toLocaleString('zh-CN',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});body.textContent=message.body;item.append(name,time,body);list.appendChild(item);}
+ }
+ function loadMessages(quiet=false,afterSubmit=false){
+  if(!online||(sending&&!afterSubmit))return Promise.resolve(false);
+  if(activeLoad)return activeLoad;
+  $('refreshMessages').disabled=true;
+  if(!quiet)guestStatus('正在读取大家的祝福…');
+  activeLoad=(async()=>{
+   try{const response=await window.MoonMessages.request({signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();const data=await response.json();if(!Array.isArray(data.messages))throw new Error();renderMessages(data.messages);loadedOnce=true;if(!quiet&&!sending)guestStatus('已同步，换台设备也能看到这里的留言。');return true;}
+   catch{if(!sending)guestStatus(loadedOnce?'暂时无法同步，下面保留上次读取的留言。':'暂时连接不到留言板。请通过站点主人提供的在线地址访问，或稍后重试。');return false;}
+   finally{activeLoad=null;$('refreshMessages').disabled=sending;}
+  })();
+  return activeLoad;
+ }
+ $('refreshMessages').addEventListener('click',()=>loadMessages());
+ $('guestbookForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!online||sending)return;
+  const name=$('guestName').value.trim(),body=$('guestMessage').value.trim();if(!name||!body){guestStatus('请填写昵称和祝福。');return;}
+  sending=true;$('refreshMessages').disabled=true;$('sendMessage').disabled=true;$('guestName').disabled=true;$('guestMessage').disabled=true;guestStatus('正在保存你的祝福…');
+  try{
+   // 等待读取结束，避免旧列表晚到而覆盖刚提交的留言。
+   if(activeLoad)await activeLoad;
+   const response=await window.MoonMessages.request({method:'POST',body:{name,body},signal:AbortSignal.timeout(10000)});
+   const data=await response.json();if(!response.ok)throw new Error(data.error||'留言未保存，请稍后重试');
+   if(!data.message||!Number.isInteger(data.message.id))throw new Error('服务响应异常，请先刷新留言确认是否已保存');
+   $('guestMessage').value='';renderMessages([data.message,...currentMessages.filter(m=>m.id!==data.message.id)].slice(0,50));loadedOnce=true;
+   const synced=await loadMessages(true,true);guestStatus(synced?'祝福已保存，大家都能在这里看到。':'祝福已保存；其他留言暂时同步失败，可稍后刷新。');
+  }catch(error){guestStatus(error.name==='TimeoutError'||error instanceof TypeError?'网络中断，请先刷新留言确认是否已保存，再决定是否重试。':error.message||'未能提交，请稍后再试。');}
+  finally{sending=false;$('refreshMessages').disabled=false;$('sendMessage').disabled=false;$('guestName').disabled=false;$('guestMessage').disabled=false;}
+ });
+ if(online){loadMessages();setInterval(()=>{if(!document.hidden)loadMessages(true);},30000);}
+ else{for(const id of ['guestName','guestMessage','sendMessage','refreshMessages'])$(id).disabled=true;guestStatus('这是离线贺卡。要查看或留下公共留言，请打开站点主人分享的在线网址。');}
+})();
+
+</script>
+</body>
+</html>
