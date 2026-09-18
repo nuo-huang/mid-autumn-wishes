@@ -6,6 +6,7 @@
  function guestStatus(text){$('guestbookStatus').textContent=text;}
  function renderMessages(messages){
   const key=JSON.stringify(messages);if(key===lastMessages)return;lastMessages=key;currentMessages=messages;
+  window.MoonBubbles?.setMessages(messages);
   const list=$('guestbookList');list.replaceChildren();
   if(!messages.length){const item=document.createElement('li');item.className='empty';item.textContent='还没有留言，来留下第一份祝福吧。';list.appendChild(item);return;}
   for(const message of messages){const item=document.createElement('li'),name=document.createElement('strong'),time=document.createElement('time'),body=document.createElement('p');name.textContent=message.name;time.dateTime=message.createdAt;time.textContent=new Date(message.createdAt).toLocaleString('zh-CN',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});body.textContent=message.body;item.append(name,time,body);list.appendChild(item);}
@@ -16,7 +17,7 @@
   $('refreshMessages').disabled=true;
   if(!quiet)guestStatus('正在读取大家的祝福…');
   activeLoad=(async()=>{
-   try{const response=await window.MoonMessages.request({signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();const data=await response.json();if(!Array.isArray(data.messages))throw new Error();renderMessages(data.messages);loadedOnce=true;if(!quiet&&!sending)guestStatus('已同步，换台设备也能看到这里的留言。');return true;}
+   try{const response=await window.MoonMessages.request({signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();const data=await response.json();if(!Array.isArray(data.messages))throw new Error();renderMessages(data.messages);loadedOnce=true;if(!sending)guestStatus('');return true;}
    catch{if(!sending)guestStatus(loadedOnce?'暂时无法同步，下面保留上次读取的留言。':'暂时连接不到留言板。请通过站点主人提供的在线地址访问，或稍后重试。');return false;}
    finally{activeLoad=null;$('refreshMessages').disabled=sending;}
   })();

@@ -22,12 +22,25 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(max-width:759px){.page{padding:18px 25px max(14px,env(safe-area-inset-bottom));max-width:520px}.brand{font-size:11px;letter-spacing:2px;gap:9px}.brand-mark{width:25px;height:25px}.date{font-size:10px;letter-spacing:1px}.top-right{gap:12px}.motion{width:44px;height:44px}.main{display:flex;flex-direction:column;padding:27px 0 24px;gap:0}.intro{text-align:center;width:100%}.eyebrow{justify-content:center;font-size:9px;letter-spacing:4px;margin-bottom:12px}.eyebrow::before{width:18px}h1{font-size:39px;letter-spacing:6px;line-height:1.35}h1 br{display:none}h1 span{display:block}.subtitle{font-size:11px;letter-spacing:2px;margin-top:12px}.scene{width:100%;height:auto;aspect-ratio:1.15;margin:1px 0 0}.moon{width:55%}.orbit{width:78%}.orbit.two{width:68%}.moon-label{right:9%;top:17%;font-size:10px}.seal{bottom:12%;font-size:9px}.scene-caption{bottom:0;font-size:10px;letter-spacing:3px}.scene-caption::before,.scene-caption::after{width:16px;margin:0 10px}.heart-note strong{font-size:25px}.heart-note span{font-size:8px;letter-spacing:3px;margin-top:9px}.letter{width:100%;text-align:center;padding-top:25px}.to{font-size:14px;letter-spacing:1px;margin-bottom:7px}.message{font-size:12px;line-height:2;letter-spacing:1px}.signature{font-size:10px;margin:10px 0 22px}.actions{justify-content:center;gap:10px;flex-wrap:nowrap}.primary{min-height:48px;padding:0 22px;font-size:12px;letter-spacing:1px}.secondary{min-height:48px;padding:0 17px;font-size:11px;letter-spacing:1px}.hint{font-size:9px;letter-spacing:1px;margin-top:11px}.footer{padding-top:12px;gap:8px}.footer p{font-size:9px;letter-spacing:1px}.download{font-size:10px;gap:5px}.download svg{width:15px}.s1{left:19%}.s2{right:15%}.s3{left:12%}}
 @media(max-width:359px){.page{padding-left:18px;padding-right:18px}.date{display:none}h1{font-size:34px}.scene{aspect-ratio:1.13}.main{padding-top:20px}.primary{padding:0 16px}.secondary{padding:0 13px}.footer p{max-width:140px}.message{font-size:12px;letter-spacing:0}.letter{padding-top:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* 分组月光气泡：5 秒内错峰出现，每条独立停留 10 秒。 */
+.wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.wish-bubble{position:absolute;left:calc(12px + var(--desktop-col)*20%);top:calc(20% + var(--desktop-row)*47%);width:calc(20% - 24px);padding:14px 16px;border:1px solid #e9c88970;border-radius:20px 20px 20px 5px;background:linear-gradient(135deg,#20373bf2,#10242ded);box-shadow:0 6px 30px #0004,0 0 20px #e9c8890b;color:var(--cream);opacity:0;will-change:opacity,transform}
+.wish-bubble:nth-child(even){border-radius:20px 20px 5px 20px}
+.wish-bubble strong{display:block;font-size:10px;font-weight:400;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wish-bubble p{margin:7px 0 0;font-size:13px;line-height:1.65;overflow-wrap:anywhere;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wish-history{margin-top:22px;border-top:1px solid var(--line);padding-top:14px}.wish-history summary{cursor:pointer;color:var(--gold);font-size:12px;letter-spacing:2px;padding:8px 0}.guestbook-status:empty{display:none}
+@keyframes moon-arrival{from{opacity:0;transform:translateY(22px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.topbar{animation:moon-arrival .9s ease both}.intro{animation:moon-arrival 1.2s .15s ease both}.scene{animation:moon-arrival 1.7s .3s ease both}.letter{animation:moon-arrival 1.2s .65s ease both}.guestbook,.footer{animation:moon-arrival 1s 1s ease both}
+.paused .topbar,.paused .intro,.paused .scene,.paused .letter,.paused .guestbook,.paused .footer{animation-play-state:paused}
+@media(max-width:759px){.wish-bubble{left:calc(10px + var(--mobile-col)*50%);top:calc(80px + var(--mobile-row)*(100% - 150px)/5);width:calc(50% - 20px);padding:10px 12px;border-radius:16px 16px 16px 4px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
+@media(prefers-reduced-motion:reduce){.wish-bubbles{display:none}.topbar,.intro,.scene,.letter,.guestbook,.footer{animation:none}}
 
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
 <canvas id="atmosphere" aria-hidden="true"></canvas>
+<div id="wishBubbles" class="wish-bubbles" aria-hidden="true"></div>
 <div class="page">
  <header class="topbar">
   <div class="brand"><span class="brand-mark" aria-hidden="true"></span>月夜来信</div>
@@ -43,7 +56,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
   </div>
   <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
  </main>
- <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。留言公开可见，请勿填写私密信息。这里展示最近 50 条祝福。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></section>
+ <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。留言公开可见，请勿填写私密信息。祝福会化作月光气泡，轻轻停留十秒。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
  <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
 </div>
 <dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
@@ -260,12 +273,71 @@ window.MOON_CONFIG = Object.freeze({
 <script>
 (() => {
  'use strict';
+ // 时间只在页面可见、动画开启且访客没有填写表单时推进。
+ function createQueue({show,remove,paint}) {
+  let messages=[],pending=[],active=[],elapsed=0,nextAt=2.2,batch=[],batchIndex=0,batchStart=0;
+  return {
+   setMessages(items){
+    const old=new Set(messages.map(m=>m.id));
+    messages=items;
+    const ids=new Set(items.map(m=>m.id));
+    pending=pending.filter(m=>ids.has(m.id));
+    for(const item of items.filter(m=>!old.has(m.id)).reverse())pending.unshift(item);
+    active=active.filter(item=>{if(ids.has(item.message.id))return true;remove(item.node);return false;});
+    batch=batch.filter((item,index)=>index<batchIndex||ids.has(item.id));
+   },
+   tick(dt){
+    elapsed+=dt;
+    active=active.filter(item=>{const age=elapsed-item.start;if(age>=10){remove(item.node);return false;}paint(item.node,age);return true;});
+    if(!messages.length)return;
+    if(elapsed>=nextAt&&!active.length&&batchIndex>=batch.length){
+     if(!pending.length)pending=[...messages];
+     batch=pending.splice(0,10);batchIndex=0;batchStart=elapsed;
+     nextAt=elapsed+15;
+    }
+    if(batchIndex<batch.length&&elapsed-batchStart>=batchIndex*.5){
+     const message=batch[batchIndex],node=show(message,batchIndex++);paint(node,0);
+     active.push({message,node,start:elapsed});
+    }
+   }
+  };
+ }
+ window.createMoonBubbleQueue=createQueue;
+ const layer=document.getElementById('wishBubbles');
+ if(!layer)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const queue=createQueue({
+  show(message,slot){
+   const bubble=document.createElement('div'),name=document.createElement('strong'),body=document.createElement('p');
+   bubble.className='wish-bubble';bubble.style.setProperty('--slot',slot);bubble.style.setProperty('--mobile-col',slot%2);bubble.style.setProperty('--mobile-row',Math.floor(slot/2));bubble.style.setProperty('--desktop-col',slot%5);bubble.style.setProperty('--desktop-row',Math.floor(slot/5));
+   name.textContent=message.name+' · 寄来一份祝福';
+   body.textContent=message.body;bubble.append(name,body);layer.append(bubble);return bubble;
+  },
+  remove:node=>node.remove(),
+  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translateY(${16-age*3}px)`;}
+ });
+ window.MoonBubbles={setMessages:items=>queue.setMessages(items)};
+ let last=performance.now();
+ setInterval(()=>{
+  const now=performance.now(),dt=Math.min((now-last)/1000,.5);last=now;
+  const typing=!!document.activeElement?.closest('input,textarea,dialog')||!!document.querySelector('.wish-history[open]');
+  const blocked=document.hidden||document.body.classList.contains('paused')||reduced.matches||typing;
+  layer.hidden=blocked;
+  if(!blocked)queue.tick(dt);
+ },100);
+})();
+
+</script>
+<script>
+(() => {
+ 'use strict';
  const $=id=>document.getElementById(id);
  // 通过统一连接层读写；离线贺卡不连接数据库。
  const online=/^https?:$/.test(location.protocol);let activeLoad=null,sending=false,lastMessages='',loadedOnce=false,currentMessages=[];
  function guestStatus(text){$('guestbookStatus').textContent=text;}
  function renderMessages(messages){
   const key=JSON.stringify(messages);if(key===lastMessages)return;lastMessages=key;currentMessages=messages;
+  window.MoonBubbles?.setMessages(messages);
   const list=$('guestbookList');list.replaceChildren();
   if(!messages.length){const item=document.createElement('li');item.className='empty';item.textContent='还没有留言，来留下第一份祝福吧。';list.appendChild(item);return;}
   for(const message of messages){const item=document.createElement('li'),name=document.createElement('strong'),time=document.createElement('time'),body=document.createElement('p');name.textContent=message.name;time.dateTime=message.createdAt;time.textContent=new Date(message.createdAt).toLocaleString('zh-CN',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});body.textContent=message.body;item.append(name,time,body);list.appendChild(item);}
@@ -276,7 +348,7 @@ window.MOON_CONFIG = Object.freeze({
   $('refreshMessages').disabled=true;
   if(!quiet)guestStatus('正在读取大家的祝福…');
   activeLoad=(async()=>{
-   try{const response=await window.MoonMessages.request({signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();const data=await response.json();if(!Array.isArray(data.messages))throw new Error();renderMessages(data.messages);loadedOnce=true;if(!quiet&&!sending)guestStatus('已同步，换台设备也能看到这里的留言。');return true;}
+   try{const response=await window.MoonMessages.request({signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();const data=await response.json();if(!Array.isArray(data.messages))throw new Error();renderMessages(data.messages);loadedOnce=true;if(!sending)guestStatus('');return true;}
    catch{if(!sending)guestStatus(loadedOnce?'暂时无法同步，下面保留上次读取的留言。':'暂时连接不到留言板。请通过站点主人提供的在线地址访问，或稍后重试。');return false;}
    finally{activeLoad=null;$('refreshMessages').disabled=sending;}
   })();
