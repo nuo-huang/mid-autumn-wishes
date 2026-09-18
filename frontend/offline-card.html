@@ -24,7 +24,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* 分组月光气泡：5 秒内错峰出现，每条独立停留 10 秒。 */
 .wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
-.wish-bubble{position:absolute;left:calc(12px + var(--desktop-col)*20%);top:calc(20% + var(--desktop-row)*47%);width:calc(20% - 24px);padding:14px 16px;border:1px solid #e9c88970;border-radius:20px 20px 20px 5px;background:linear-gradient(135deg,#20373bf2,#10242ded);box-shadow:0 6px 30px #0004,0 0 20px #e9c8890b;color:var(--cream);opacity:0;will-change:opacity,transform}
+.wish-bubble{position:absolute;padding:14px 16px;border:1px solid #e9c88945;border-radius:24px 24px 24px 7px;background:linear-gradient(135deg,#294044df,#10242ddb);box-shadow:0 8px 28px #0003,inset 0 1px 0 #fff1c612;color:var(--cream);opacity:0;will-change:opacity,transform}
 .wish-bubble:nth-child(even){border-radius:20px 20px 5px 20px}
 .wish-bubble strong{display:block;font-size:10px;font-weight:400;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wish-bubble p{margin:7px 0 0;font-size:13px;line-height:1.65;overflow-wrap:anywhere;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -32,7 +32,8 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @keyframes moon-arrival{from{opacity:0;transform:translateY(22px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 .topbar{animation:moon-arrival .9s ease both}.intro{animation:moon-arrival 1.2s .15s ease both}.scene{animation:moon-arrival 1.7s .3s ease both}.letter{animation:moon-arrival 1.2s .65s ease both}.guestbook,.footer{animation:moon-arrival 1s 1s ease both}
 .paused .topbar,.paused .intro,.paused .scene,.paused .letter,.paused .guestbook,.paused .footer{animation-play-state:paused}
-@media(max-width:759px){.wish-bubble{left:calc(10px + var(--mobile-col)*50%);top:calc(80px + var(--mobile-row)*(100% - 150px)/5);width:calc(50% - 20px);padding:10px 12px;border-radius:16px 16px 16px 4px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
+@media(max-width:759px){.wish-bubble{padding:10px 12px;border-radius:19px 19px 19px 5px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
+@media(max-height:620px) and (max-width:759px){.wish-bubble{padding:7px 10px}.wish-bubble p{font-size:10px;margin-top:3px}}
 @media(prefers-reduced-motion:reduce){.wish-bubbles{display:none}.topbar,.intro,.scene,.letter,.guestbook,.footer{animation:none}}
 
 </style>
@@ -56,7 +57,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
   </div>
   <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
  </main>
- <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。留言公开可见，请勿填写私密信息。祝福会化作月光气泡，轻轻停留十秒。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
+ <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
  <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
 </div>
 <dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
@@ -141,7 +142,7 @@ window.MOON_CONFIG = Object.freeze({
    const x=i*640/19,y=74+Math.sin(i*2.3)*22,rx=65+Math.sin(i*1.7)*25,ry=22+Math.cos(i*1.2)*9;
    for(const shift of [-640,0,640]){
     c.save();c.translate(x+shift,y);c.scale(rx,ry);const g=c.createRadialGradient(0,0,0,0,0,1);
-    g.addColorStop(0,'rgba(175,206,209,.17)');g.addColorStop(.4,'rgba(135,179,188,.1)');g.addColorStop(1,'rgba(117,161,174,0)');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();
+    g.addColorStop(0,'rgba(188,210,212,.28)');g.addColorStop(.4,'rgba(151,188,195,.15)');g.addColorStop(1,'rgba(117,161,174,0)');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();
    }
   }
   return sprite;
@@ -173,7 +174,7 @@ window.MOON_CONFIG = Object.freeze({
   // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
   const w=vw,h=vh;
   if(!ac)return;ac.clearRect(0,0,w,h);
-  cloudBand(h*.2,5,w*.18,.4,.3);
+  cloudBand(h*(.2+Math.sin(elapsed*.055)*.014),4,w*.18,.48,.38);
   for(const [i,lamp] of lanterns.entries()){
    const progress=(elapsed/(lamp.duration*1.65)+lamp.offset)%1;
    const fade=Math.min(1,progress/.12,(1-progress)/.15);
@@ -183,8 +184,8 @@ window.MOON_CONFIG = Object.freeze({
    ac.save();ac.globalAlpha=lamp.alpha*fade;ac.translate(x,y);ac.rotate(Math.sin(elapsed*.32+i)*.065);
    ac.drawImage(lanternArt,-size*.5,-size*.65,size,size*1.3);ac.restore();
   }
-  cloudBand(h*.51,-7,w*.7,.5,.36);
-  cloudBand(h*.84,9,w*.31,.64,.3);
+  cloudBand(h*(.54+Math.sin(elapsed*.043+2)*.018),-6,w*.7,.58,.44);
+  cloudBand(h*(.86+Math.sin(elapsed*.038+4)*.012),7,w*.31,.72,.4);
  }
  function fitCanvas(c,width,height){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);}
  function resize(){
@@ -274,7 +275,7 @@ window.MOON_CONFIG = Object.freeze({
 (() => {
  'use strict';
  // 时间只在页面可见、动画开启且访客没有填写表单时推进。
- function createQueue({show,remove,paint}) {
+ function createQueue({show,remove,paint,batchSize=()=>5+Math.floor(Math.random()*3)}) {
   let messages=[],pending=[],active=[],elapsed=0,nextAt=2.2,batch=[],batchIndex=0,batchStart=0;
   return {
    setMessages(items){
@@ -292,7 +293,7 @@ window.MOON_CONFIG = Object.freeze({
     if(!messages.length)return;
     if(elapsed>=nextAt&&!active.length&&batchIndex>=batch.length){
      if(!pending.length)pending=[...messages];
-     batch=pending.splice(0,10);batchIndex=0;batchStart=elapsed;
+     batch=pending.splice(0,batchSize());batchIndex=0;batchStart=elapsed;
      nextAt=elapsed+15;
     }
     if(batchIndex<batch.length&&elapsed-batchStart>=batchIndex*.5){
@@ -306,16 +307,32 @@ window.MOON_CONFIG = Object.freeze({
  const layer=document.getElementById('wishBubbles');
  if(!layer)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ let cells=[];
+ function scatter(node){
+  const mobile=innerWidth<760,columns=mobile?2:5,rows=10/columns;
+  const cellWidth=document.documentElement.clientWidth/columns,cellHeight=(innerHeight-104)/rows;
+  const cell=Number(node.dataset.cell),variation=Number(node.dataset.variation);
+  node.style.width=Math.max(90,Math.min(cellWidth-22,mobile?182:240)*(.88+variation*.12))+'px';
+  const width=node.offsetWidth,height=node.offsetHeight;
+  // 每条仍有独立的安全区域，但在其中随机错位，避免气泡相互覆盖。
+  const x=cell%columns*cellWidth+10+(cellWidth-width-20)*Number(node.dataset.horizontal);
+  const y=80+Math.floor(cell/columns)*cellHeight+8+Math.max(0,cellHeight-height-20)*variation;
+  node.style.left=x+'px';node.style.top=y+'px';
+ }
  const queue=createQueue({
+  batchSize:()=> (innerWidth<760?5:6)+Math.floor(Math.random()*3),
   show(message,slot){
    const bubble=document.createElement('div'),name=document.createElement('strong'),body=document.createElement('p');
-   bubble.className='wish-bubble';bubble.style.setProperty('--slot',slot);bubble.style.setProperty('--mobile-col',slot%2);bubble.style.setProperty('--mobile-row',Math.floor(slot/2));bubble.style.setProperty('--desktop-col',slot%5);bubble.style.setProperty('--desktop-row',Math.floor(slot/5));
+   if(slot===0){cells=Array.from({length:10},(_,i)=>i);for(let i=9;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cells[i],cells[j]]=[cells[j],cells[i]];}}
+   bubble.className='wish-bubble';bubble.dataset.cell=String(cells[slot]);bubble.dataset.variation=String(Math.random());bubble.dataset.horizontal=String(Math.random());bubble.dataset.drift=String(Math.random()*Math.PI*2);
    name.textContent=message.name+' · 寄来一份祝福';
-   body.textContent=message.body;bubble.append(name,body);layer.append(bubble);return bubble;
+   body.textContent=message.body;bubble.append(name,body);layer.append(bubble);scatter(bubble);return bubble;
   },
   remove:node=>node.remove(),
-  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translateY(${16-age*3}px)`;}
+  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translate(${Math.sin(age*.55+Number(node.dataset.drift))*3}px,${8-age*1.6}px)`;}
  });
+ let layoutDirty=false;
+ addEventListener('resize',()=>{layoutDirty=true;});
  window.MoonBubbles={setMessages:items=>queue.setMessages(items)};
  let last=performance.now();
  setInterval(()=>{
@@ -323,6 +340,7 @@ window.MOON_CONFIG = Object.freeze({
   const typing=!!document.activeElement?.closest('input,textarea,dialog')||!!document.querySelector('.wish-history[open]');
   const blocked=document.hidden||document.body.classList.contains('paused')||reduced.matches||typing;
   layer.hidden=blocked;
+  if(layoutDirty&&!blocked){for(const node of layer.children)scatter(node);layoutDirty=false;}
   if(!blocked)queue.tick(dt);
  },100);
 })();

@@ -43,7 +43,7 @@
    const x=i*640/19,y=74+Math.sin(i*2.3)*22,rx=65+Math.sin(i*1.7)*25,ry=22+Math.cos(i*1.2)*9;
    for(const shift of [-640,0,640]){
     c.save();c.translate(x+shift,y);c.scale(rx,ry);const g=c.createRadialGradient(0,0,0,0,0,1);
-    g.addColorStop(0,'rgba(175,206,209,.17)');g.addColorStop(.4,'rgba(135,179,188,.1)');g.addColorStop(1,'rgba(117,161,174,0)');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();
+    g.addColorStop(0,'rgba(188,210,212,.28)');g.addColorStop(.4,'rgba(151,188,195,.15)');g.addColorStop(1,'rgba(117,161,174,0)');c.fillStyle=g;c.fillRect(-1,-1,2,2);c.restore();
    }
   }
   return sprite;
@@ -75,7 +75,7 @@
   // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
   const w=vw,h=vh;
   if(!ac)return;ac.clearRect(0,0,w,h);
-  cloudBand(h*.2,5,w*.18,.4,.3);
+  cloudBand(h*(.2+Math.sin(elapsed*.055)*.014),4,w*.18,.48,.38);
   for(const [i,lamp] of lanterns.entries()){
    const progress=(elapsed/(lamp.duration*1.65)+lamp.offset)%1;
    const fade=Math.min(1,progress/.12,(1-progress)/.15);
@@ -85,8 +85,8 @@
    ac.save();ac.globalAlpha=lamp.alpha*fade;ac.translate(x,y);ac.rotate(Math.sin(elapsed*.32+i)*.065);
    ac.drawImage(lanternArt,-size*.5,-size*.65,size,size*1.3);ac.restore();
   }
-  cloudBand(h*.51,-7,w*.7,.5,.36);
-  cloudBand(h*.84,9,w*.31,.64,.3);
+  cloudBand(h*(.54+Math.sin(elapsed*.043+2)*.018),-6,w*.7,.58,.44);
+  cloudBand(h*(.86+Math.sin(elapsed*.038+4)*.012),7,w*.31,.72,.4);
  }
  function fitCanvas(c,width,height){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);}
  function resize(){

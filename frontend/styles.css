@@ -15,7 +15,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* 分组月光气泡：5 秒内错峰出现，每条独立停留 10 秒。 */
 .wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
-.wish-bubble{position:absolute;left:calc(12px + var(--desktop-col)*20%);top:calc(20% + var(--desktop-row)*47%);width:calc(20% - 24px);padding:14px 16px;border:1px solid #e9c88970;border-radius:20px 20px 20px 5px;background:linear-gradient(135deg,#20373bf2,#10242ded);box-shadow:0 6px 30px #0004,0 0 20px #e9c8890b;color:var(--cream);opacity:0;will-change:opacity,transform}
+.wish-bubble{position:absolute;padding:14px 16px;border:1px solid #e9c88945;border-radius:24px 24px 24px 7px;background:linear-gradient(135deg,#294044df,#10242ddb);box-shadow:0 8px 28px #0003,inset 0 1px 0 #fff1c612;color:var(--cream);opacity:0;will-change:opacity,transform}
 .wish-bubble:nth-child(even){border-radius:20px 20px 5px 20px}
 .wish-bubble strong{display:block;font-size:10px;font-weight:400;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wish-bubble p{margin:7px 0 0;font-size:13px;line-height:1.65;overflow-wrap:anywhere;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -23,5 +23,6 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @keyframes moon-arrival{from{opacity:0;transform:translateY(22px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 .topbar{animation:moon-arrival .9s ease both}.intro{animation:moon-arrival 1.2s .15s ease both}.scene{animation:moon-arrival 1.7s .3s ease both}.letter{animation:moon-arrival 1.2s .65s ease both}.guestbook,.footer{animation:moon-arrival 1s 1s ease both}
 .paused .topbar,.paused .intro,.paused .scene,.paused .letter,.paused .guestbook,.paused .footer{animation-play-state:paused}
-@media(max-width:759px){.wish-bubble{left:calc(10px + var(--mobile-col)*50%);top:calc(80px + var(--mobile-row)*(100% - 150px)/5);width:calc(50% - 20px);padding:10px 12px;border-radius:16px 16px 16px 4px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
+@media(max-width:759px){.wish-bubble{padding:10px 12px;border-radius:19px 19px 19px 5px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
+@media(max-height:620px) and (max-width:759px){.wish-bubble{padding:7px 10px}.wish-bubble p{font-size:10px;margin-top:3px}}
 @media(prefers-reduced-motion:reduce){.wish-bubbles{display:none}.topbar,.intro,.scene,.letter,.guestbook,.footer{animation:none}}
