@@ -35,6 +35,7 @@
    const data=await response.json();if(!response.ok)throw new Error(data.error||'留言未保存，请稍后重试');
    if(!data.message||!Number.isInteger(data.message.id))throw new Error('服务响应异常，请先刷新留言确认是否已保存');
    $('guestMessage').value='';renderMessages([data.message,...currentMessages.filter(m=>m.id!==data.message.id)].slice(0,50));loadedOnce=true;
+   window.MoonBubbles?.celebrate(data.message);
    const synced=await loadMessages(true,true);guestStatus(synced?'祝福已保存，大家都能在这里看到。':'祝福已保存；其他留言暂时同步失败，可稍后刷新。');
   }catch(error){guestStatus(error.name==='TimeoutError'||error instanceof TypeError?'网络中断，请先刷新留言确认是否已保存，再决定是否重试。':error.message||'未能提交，请稍后再试。');}
   finally{sending=false;$('refreshMessages').disabled=false;$('sendMessage').disabled=false;$('guestName').disabled=false;$('guestMessage').disabled=false;}

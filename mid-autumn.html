@@ -35,6 +35,8 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(max-width:759px){.wish-bubble{padding:10px 12px;border-radius:19px 19px 19px 5px}.wish-bubble strong{font-size:9px}.wish-bubble p{font-size:11px;line-height:1.55;-webkit-line-clamp:2;margin-top:5px}}
 @media(max-height:620px) and (max-width:759px){.wish-bubble{padding:7px 10px}.wish-bubble p{font-size:10px;margin-top:3px}}
 @media(prefers-reduced-motion:reduce){.wish-bubbles{display:none}.topbar,.intro,.scene,.letter,.guestbook,.footer{animation:none}}
+.guestbook-actions{display:flex;gap:8px;flex-wrap:wrap}.guestbook .bubble-toggle{min-height:44px;padding:0 14px}.bubble-toggle[aria-pressed="true"]{color:var(--gold);border-color:#e9c88970}.wish-celebration{grid-column:1/-1;margin-top:18px;padding:18px 22px;border:1px solid #edcf9270;border-radius:22px 22px 22px 6px;background:linear-gradient(135deg,#3d4434aa,#142d35);box-shadow:0 0 30px #efca7520;animation:moon-arrival .8s ease both;overflow-wrap:anywhere}.wish-celebration strong{font-weight:400;color:var(--gold);font-size:13px;letter-spacing:2px}.wish-celebration p{white-space:pre-wrap;font-size:14px;line-height:1.8;margin:9px 0 0}.wish-lantern{position:fixed;width:140px;height:auto;z-index:7;pointer-events:none;filter:drop-shadow(0 0 20px #efb74c66);will-change:transform,top;opacity:0}@media(max-width:759px){.guestbook-head{align-items:flex-start;flex-direction:column;gap:12px}.guestbook-actions{width:100%}.guestbook-actions button{flex:1}.wish-lantern{width:110px}.wish-celebration{padding:15px 18px}.wish-celebration p{font-size:13px}}
+@media(max-width:759px){.wish-bubble{padding:8px 10px}.wish-bubble strong{font-size:8px}.wish-bubble p{font-size:10px;line-height:1.5;-webkit-line-clamp:1;margin-top:4px}}
 
 </style>
 </head>
@@ -57,7 +59,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
   </div>
   <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
  </main>
- <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div><p class="guestbook-note">与大家分享一份团圆心意。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
+ <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><div class="guestbook-actions"><button class="secondary bubble-toggle" id="toggleBubbles" type="button" aria-pressed="false">收起气泡</button><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div></div><p class="guestbook-note">与大家分享一份团圆心意。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
  <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
 </div>
 <dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
@@ -148,6 +150,13 @@ window.MOON_CONFIG = Object.freeze({
   return sprite;
  }
  const lanternArt=ctx?lanternSprite():null,mistArt=ctx?mistSprite():null;
+ let wishLantern=null;
+ window.MoonAtmosphere={releaseLantern(){
+  if(!lanternArt||paused||reduced.matches)return;
+  wishLantern?.node.remove();
+  const node=document.createElement('img');node.className='wish-lantern';node.alt='';node.setAttribute('aria-hidden','true');node.src=lanternArt.toDataURL();document.body.append(node);
+  wishLantern={node,start:elapsed};
+ }};
  const lanterns=[
   {x:.12,offset:.22,duration:43,size:.17,alpha:.88},
   {x:.85,offset:.52,duration:51,size:.12,alpha:.7},
@@ -171,6 +180,7 @@ window.MOON_CONFIG = Object.freeze({
   ac.restore();
  }
  function atmosphere(){
+  if(wishLantern){const age=elapsed-wishLantern.start;if(age>=10){wishLantern.node.remove();wishLantern=null;}else{const p=age/10;wishLantern.node.style.left=(vw*.86+Math.sin(age*.8)*12)+'px';wishLantern.node.style.top=(vh*(.92-p*.95))+'px';wishLantern.node.style.opacity=String(Math.min(1,age*2,(10-age)/1.5));wishLantern.node.style.transform=`translate(-50%,-50%) scale(${1-p*.35}) rotate(${Math.sin(age)*3}deg)`;}}
   // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
   const w=vw,h=vh;
   if(!ac)return;ac.clearRect(0,0,w,h);
@@ -307,17 +317,37 @@ window.MOON_CONFIG = Object.freeze({
  const layer=document.getElementById('wishBubbles');
  if(!layer)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- let cells=[];
+ let cells=[],hiddenByUser=false,celebration=null;
+ const toggle=document.getElementById('toggleBubbles');
+ try{hiddenByUser=localStorage.getItem('moon-hide-bubbles')==='true';}catch{}
+ function toggleUI(){toggle.textContent=hiddenByUser?'显示气泡':'收起气泡';toggle.setAttribute('aria-pressed',String(hiddenByUser));layer.hidden=hiddenByUser;}
+ toggle.addEventListener('click',()=>{hiddenByUser=!hiddenByUser;try{localStorage.setItem('moon-hide-bubbles',String(hiddenByUser));}catch{}toggleUI();});
+ toggleUI();
+ const intersects=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
  function scatter(node){
-  const mobile=innerWidth<760,columns=mobile?2:5,rows=10/columns;
-  const cellWidth=document.documentElement.clientWidth/columns,cellHeight=(innerHeight-104)/rows;
-  const cell=Number(node.dataset.cell),variation=Number(node.dataset.variation);
-  node.style.width=Math.max(90,Math.min(cellWidth-22,mobile?182:240)*(.88+variation*.12))+'px';
+  const mobile=innerWidth<760,vw=document.documentElement.clientWidth,variation=Number(node.dataset.variation);
+  node.style.width=Math.min(vw*.36,mobile?100:218)*(.88+variation*.12)+'px';
   const width=node.offsetWidth,height=node.offsetHeight;
-  // 每条仍有独立的安全区域，但在其中随机错位，避免气泡相互覆盖。
-  const x=cell%columns*cellWidth+10+(cellWidth-width-20)*Number(node.dataset.horizontal);
-  const y=80+Math.floor(cell/columns)*cellHeight+8+Math.max(0,cellHeight-height-20)*variation;
-  node.style.left=x+'px';node.style.top=y+'px';
+  const obstacles=[...document.querySelectorAll('h1,.moon,.eyebrow,.subtitle,.message,.to,.signature,.heart-note,.scene-caption,.moon-label,.hint,.guestbook-head,.guestbook-note,.wish-celebration,button,input,textarea,summary,label')].flatMap(n=>{
+   if(n.matches('h1,.subtitle,.message,.to,.signature,.guestbook-note,label')){
+    const walker=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),rects=[];
+    while(walker.nextNode())if(walker.currentNode.textContent.trim()){const range=document.createRange();range.selectNodeContents(walker.currentNode);rects.push(...range.getClientRects());}
+    return rects;
+   }
+   return [n.getBoundingClientRect()];
+  }).filter(r=>r.width&&r.height&&r.bottom>0&&r.top<innerHeight);
+  for(const other of layer.children)if(other!==node&&other.style.visibility!=='hidden')obstacles.push(other.getBoundingClientRect());
+  const candidates=[];
+  for(let y=76;y<innerHeight-height-22;y+=12){
+   const left=6+variation*5,right=vw-width-6-variation*5;
+   candidates.push({x:left,y},{x:right,y});
+  }
+  // 候选点只沿两侧移动，保留月亮与正文；空位不够时暂缓展示。
+  candidates.sort((a,b)=>Math.abs(a.y-(76+Number(node.dataset.horizontal)*(innerHeight-150)))-Math.abs(b.y-(76+Number(node.dataset.horizontal)*(innerHeight-150))));
+  if(Number(node.dataset.cell)%2)candidates.forEach((p,i)=>{if(i%2===0&&i+1<candidates.length)[candidates[i],candidates[i+1]]=[candidates[i+1],candidates[i]];});
+  const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-6,right:p.x+width+6,top:p.y-18,bottom:p.y+height+18},r)));
+  node.style.visibility=spot?'visible':'hidden';
+  if(spot){node.style.left=spot.x+'px';node.style.top=spot.y+'px';}
  }
  const queue=createQueue({
   batchSize:()=> (innerWidth<760?5:6)+Math.floor(Math.random()*3),
@@ -333,14 +363,24 @@ window.MOON_CONFIG = Object.freeze({
  });
  let layoutDirty=false;
  addEventListener('resize',()=>{layoutDirty=true;});
- window.MoonBubbles={setMessages:items=>queue.setMessages(items)};
+ addEventListener('scroll',()=>{layoutDirty=true;},{passive:true});
+ function celebrate(message){
+  celebration?.node.remove();
+  const node=document.createElement('div'),title=document.createElement('strong'),body=document.createElement('p');
+  node.className='wish-celebration';title.textContent='你的祝福，已乘灯启程';body.textContent=message.body;node.append(title,body);
+  document.querySelector('.send-row').after(node);celebration={node,age:0};layoutDirty=true;
+  window.MoonAtmosphere?.releaseLantern();
+ }
+ window.MoonBubbles={setMessages:items=>queue.setMessages(items),celebrate};
  let last=performance.now();
  setInterval(()=>{
   const now=performance.now(),dt=Math.min((now-last)/1000,.5);last=now;
   const typing=!!document.activeElement?.closest('input,textarea,dialog')||!!document.querySelector('.wish-history[open]');
-  const blocked=document.hidden||document.body.classList.contains('paused')||reduced.matches||typing;
+  const stopped=document.hidden||document.body.classList.contains('paused');
+  if(celebration&&!document.hidden&&(!stopped||reduced.matches)){celebration.age+=dt;if(celebration.age>=10){celebration.node.remove();celebration=null;layoutDirty=true;}}
+  const blocked=stopped||reduced.matches||typing||hiddenByUser;
   layer.hidden=blocked;
-  if(layoutDirty&&!blocked){for(const node of layer.children)scatter(node);layoutDirty=false;}
+  if(layoutDirty&&!blocked){for(const node of layer.children)node.style.visibility='hidden';for(const node of layer.children)scatter(node);layoutDirty=false;}
   if(!blocked)queue.tick(dt);
  },100);
 })();
@@ -384,6 +424,7 @@ window.MOON_CONFIG = Object.freeze({
    const data=await response.json();if(!response.ok)throw new Error(data.error||'留言未保存，请稍后重试');
    if(!data.message||!Number.isInteger(data.message.id))throw new Error('服务响应异常，请先刷新留言确认是否已保存');
    $('guestMessage').value='';renderMessages([data.message,...currentMessages.filter(m=>m.id!==data.message.id)].slice(0,50));loadedOnce=true;
+   window.MoonBubbles?.celebrate(data.message);
    const synced=await loadMessages(true,true);guestStatus(synced?'祝福已保存，大家都能在这里看到。':'祝福已保存；其他留言暂时同步失败，可稍后刷新。');
   }catch(error){guestStatus(error.name==='TimeoutError'||error instanceof TypeError?'网络中断，请先刷新留言确认是否已保存，再决定是否重试。':error.message||'未能提交，请稍后再试。');}
   finally{sending=false;$('refreshMessages').disabled=false;$('sendMessage').disabled=false;$('guestName').disabled=false;$('guestMessage').disabled=false;}

@@ -49,6 +49,13 @@
   return sprite;
  }
  const lanternArt=ctx?lanternSprite():null,mistArt=ctx?mistSprite():null;
+ let wishLantern=null;
+ window.MoonAtmosphere={releaseLantern(){
+  if(!lanternArt||paused||reduced.matches)return;
+  wishLantern?.node.remove();
+  const node=document.createElement('img');node.className='wish-lantern';node.alt='';node.setAttribute('aria-hidden','true');node.src=lanternArt.toDataURL();document.body.append(node);
+  wishLantern={node,start:elapsed};
+ }};
  const lanterns=[
   {x:.12,offset:.22,duration:43,size:.17,alpha:.88},
   {x:.85,offset:.52,duration:51,size:.12,alpha:.7},
@@ -72,6 +79,7 @@
   ac.restore();
  }
  function atmosphere(){
+  if(wishLantern){const age=elapsed-wishLantern.start;if(age>=10){wishLantern.node.remove();wishLantern=null;}else{const p=age/10;wishLantern.node.style.left=(vw*.86+Math.sin(age*.8)*12)+'px';wishLantern.node.style.top=(vh*(.92-p*.95))+'px';wishLantern.node.style.opacity=String(Math.min(1,age*2,(10-age)/1.5));wishLantern.node.style.transform=`translate(-50%,-50%) scale(${1-p*.35}) rotate(${Math.sin(age)*3}deg)`;}}
   // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
   const w=vw,h=vh;
   if(!ac)return;ac.clearRect(0,0,w,h);
