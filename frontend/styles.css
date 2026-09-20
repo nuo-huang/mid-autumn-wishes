@@ -14,7 +14,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(max-width:359px){.page{padding-left:18px;padding-right:18px}.date{display:none}h1{font-size:34px}.scene{aspect-ratio:1.13}.main{padding-top:20px}.primary{padding:0 16px}.secondary{padding:0 13px}.footer p{max-width:140px}.message{font-size:12px;letter-spacing:0}.letter{padding-top:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* 分组月光气泡：5 秒内错峰出现，每条独立停留 10 秒。 */
-.wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden;opacity:1;transition:opacity .18s ease}
 .wish-bubble{position:absolute;padding:14px 16px;border:1px solid #e9c88945;border-radius:24px 24px 24px 7px;background:linear-gradient(135deg,#294044df,#10242ddb);box-shadow:0 8px 28px #0003,inset 0 1px 0 #fff1c612;color:var(--cream);opacity:0;will-change:opacity,transform}
 .wish-bubble:nth-child(even){border-radius:20px 20px 5px 20px}
 .wish-bubble strong{display:block;font-size:10px;font-weight:400;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

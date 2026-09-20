@@ -23,7 +23,7 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(max-width:359px){.page{padding-left:18px;padding-right:18px}.date{display:none}h1{font-size:34px}.scene{aspect-ratio:1.13}.main{padding-top:20px}.primary{padding:0 16px}.secondary{padding:0 13px}.footer p{max-width:140px}.message{font-size:12px;letter-spacing:0}.letter{padding-top:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* 分组月光气泡：5 秒内错峰出现，每条独立停留 10 秒。 */
-.wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.wish-bubbles{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden;opacity:1;transition:opacity .18s ease}
 .wish-bubble{position:absolute;padding:14px 16px;border:1px solid #e9c88945;border-radius:24px 24px 24px 7px;background:linear-gradient(135deg,#294044df,#10242ddb);box-shadow:0 8px 28px #0003,inset 0 1px 0 #fff1c612;color:var(--cream);opacity:0;will-change:opacity,transform}
 .wish-bubble:nth-child(even){border-radius:20px 20px 5px 20px}
 .wish-bubble strong{display:block;font-size:10px;font-weight:400;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -476,7 +476,10 @@ window.MOON_CONFIG = Object.freeze({
   // 整段正文作为留白区，气泡不再挤进标题的字缝；互相避让时使用原始位置覆盖完整漂移幅度。
   const obstacles=[...document.querySelectorAll('.topbar,.intro,.letter,.moon,.heart-note,.scene-caption,.moon-label,.seal,.guestbook,.footer,.wish-celebration,button,input,textarea')]
    .map(n=>n.getBoundingClientRect()).filter(r=>r.width&&r.height&&r.bottom>0&&r.top<innerHeight);
-  for(const other of layer.children)if(other!==node&&other.style.visibility!=='hidden')obstacles.push({left:other.offsetLeft-10,right:other.offsetLeft+other.offsetWidth+10,top:other.offsetTop-14,bottom:other.offsetTop+other.offsetHeight+14});
+  for(const other of layer.children)if(other!==node&&other.style.visibility!=='hidden'){
+   const y=other.offsetTop+Number(other.dataset.scrollY)-scrollY;
+   obstacles.push({left:other.offsetLeft-10,right:other.offsetLeft+other.offsetWidth+10,top:y-14,bottom:y+other.offsetHeight+14});
+  }
   const scene=document.getElementById('scene').getBoundingClientRect();
   const inset=mobile?18:32;
   const top=Math.max(76,mobile?scene.top+12:76),bottom=Math.min(innerHeight-height-24,mobile?scene.bottom-height-20:innerHeight-height-24);
@@ -492,8 +495,9 @@ window.MOON_CONFIG = Object.freeze({
   candidates.sort((a,b)=>score(a)-score(b));
   const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-10,right:p.x+width+10,top:p.y-16,bottom:p.y+height+16},r)));
   node.style.visibility=spot?'visible':'hidden';
-  if(spot){node.style.left=spot.x+'px';node.style.top=spot.y+'px';}
+  if(spot){node.style.left=spot.x+'px';node.style.top=spot.y+'px';node.dataset.scrollY=String(scrollY);}
  }
+ const ease=value=>{const t=Math.max(0,Math.min(1,value));return t*t*(3-2*t);};
  const queue=createQueue({
   batchSize:()=> (innerWidth<760?5:6)+Math.floor(Math.random()*3),
   show(message,slot){
@@ -503,30 +507,46 @@ window.MOON_CONFIG = Object.freeze({
    body.textContent=message.body;bubble.append(name,body);layer.append(bubble);scatter(bubble);return bubble;
   },
   remove:node=>node.remove(),
-  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translate(${Math.sin(age*.4+Number(node.dataset.drift))*2}px,${4-age*.8}px)`;}
+  paint(node,age){
+   node.style.opacity=String(Math.min(ease(age/1.4),ease((10-age)/1.6)));
+   const y=Number(node.dataset.scrollY||scrollY)-scrollY+4-age*.8;
+   node.style.transform=`translate3d(${Math.sin(age*.4+Number(node.dataset.drift))*2}px,${y}px,0)`;
+  }
  });
- let layoutDirty=false;
- addEventListener('resize',()=>{layoutDirty=true;});
- addEventListener('scroll',()=>{layoutDirty=true;},{passive:true});
+ let layoutDirty=false,layoutAt=0;
+ function invalidateLayout(){layoutDirty=true;layoutAt=performance.now();layer.style.opacity='0';}
+ addEventListener('resize',invalidateLayout);
+ // 滚动只改变合成层位移，不重新测量或打乱位置；尺寸变化淡出后再布局。
  function celebrate(message){
   celebration?.node.remove();
   const node=document.createElement('div'),title=document.createElement('strong'),body=document.createElement('p');
   node.className='wish-celebration';title.textContent='你的祝福，已乘灯启程';body.textContent=message.body;node.append(title,body);
-  document.querySelector('.send-row').after(node);celebration={node,age:0};layoutDirty=true;
+  document.querySelector('.send-row').after(node);celebration={node,age:0};invalidateLayout();
   window.MoonAtmosphere?.releaseLantern();
  }
  window.MoonBubbles={setMessages:items=>queue.setMessages(items),celebrate};
- let last=performance.now();
- setInterval(()=>{
-  const now=performance.now(),dt=Math.min((now-last)/1000,.5);last=now;
+ let last=0,frame=0;
+ function tick(now){
+  frame=0;
+  const dt=last?Math.min((now-last)/1000,.05):0;last=now;
   const typing=!!document.activeElement?.closest('input,textarea,dialog')||!!document.querySelector('.wish-history[open]');
   const stopped=document.hidden||document.body.classList.contains('paused');
-  if(celebration&&!document.hidden&&(!stopped||reduced.matches)){celebration.age+=dt;if(celebration.age>=10){celebration.node.remove();celebration=null;layoutDirty=true;}}
+  if(celebration&&!document.hidden&&(!stopped||reduced.matches)){celebration.age+=dt;if(celebration.age>=10){celebration.node.remove();celebration=null;invalidateLayout();}}
   const blocked=stopped||reduced.matches||typing||hiddenByUser||document.body.classList.contains('welcoming');
   layer.hidden=blocked;
-  if(layoutDirty&&!blocked){for(const node of layer.children)node.style.visibility='hidden';for(const node of layer.children)scatter(node);layoutDirty=false;}
-  if(!blocked)queue.tick(dt);
- },100);
+  if(layoutDirty&&!blocked&&now-layoutAt>=220){
+   for(const node of layer.children)node.style.visibility='hidden';
+   for(const node of layer.children)scatter(node);
+   layoutDirty=false;layer.style.opacity='1';
+  }
+  if(!blocked)queue.tick(layoutDirty?0:dt);
+  if(!document.hidden)frame=requestAnimationFrame(tick);
+ }
+ document.addEventListener('visibilitychange',()=>{
+  cancelAnimationFrame(frame);frame=0;last=0;
+  if(!document.hidden)frame=requestAnimationFrame(tick);
+ });
+ if(!document.hidden)frame=requestAnimationFrame(tick);
 })();
 
 </script>
