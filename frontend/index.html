@@ -9,6 +9,54 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<dialog id="rabbitWelcome" class="rabbit-welcome" aria-labelledby="rabbitTitle" aria-describedby="rabbitBlessing">
+ <button class="welcome-skip" id="skipWelcome" type="button" autofocus>跳过开场 <span aria-hidden="true">↗</span></button>
+ <div class="welcome-composition">
+  <p class="welcome-overline">月 宫 来 客 · 为 你 送 福</p>
+  <div class="rabbit-stage" aria-hidden="true">
+   <div class="welcome-moon"></div><div class="welcome-orbit"></div>
+   <span class="welcome-star star-a">✦</span><span class="welcome-star star-b">✧</span><span class="welcome-star star-c">✦</span>
+   <svg class="welcome-cloud cloud-back" viewBox="0 0 440 90" fill="none"><path d="M0 65C40 37 66 82 111 55S170 26 206 49 255 23 291 43 365 24 440 52" stroke="currentColor" stroke-width="26" stroke-linecap="round"/><path d="M40 79C89 57 134 88 191 65S313 82 402 56" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>
+   <div class="rabbit-arrival"><svg class="jade-rabbit" viewBox="0 0 360 350" fill="none">
+    <defs>
+     <linearGradient id="rabbitFur" x1="120" y1="85" x2="243" y2="278" gradientUnits="userSpaceOnUse"><stop stop-color="#fffbed"/><stop offset=".68" stop-color="#f5eedb"/><stop offset="1" stop-color="#d9d9c4"/></linearGradient>
+     <linearGradient id="rabbitEar" x1="155" y1="45" x2="162" y2="137" gradientUnits="userSpaceOnUse"><stop stop-color="#efd0bb"/><stop offset="1" stop-color="#f7e1cf"/></linearGradient>
+     <linearGradient id="rabbitJade" x1="140" y1="220" x2="215" y2="312" gradientUnits="userSpaceOnUse"><stop stop-color="#65958b"/><stop offset="1" stop-color="#2c5b59"/></linearGradient>
+     <linearGradient id="cakeGold" x1="170" y1="224" x2="170" y2="271" gradientUnits="userSpaceOnUse"><stop stop-color="#f8d28a"/><stop offset="1" stop-color="#bc7836"/></linearGradient>
+    </defs>
+    <ellipse cx="180" cy="329" rx="78" ry="10" fill="#082c30" opacity=".35"/>
+    <g class="rabbit-bob">
+     <circle cx="251" cy="280" r="24" fill="url(#rabbitFur)" stroke="#e2ddc6" stroke-width="2"/>
+     <ellipse cx="145" cy="317" rx="31" ry="13" fill="url(#rabbitFur)"/><ellipse cx="216" cy="317" rx="31" ry="13" fill="url(#rabbitFur)"/>
+     <path d="M140 211C117 227 114 281 127 311Q180 329 235 309C244 276 240 232 218 213Z" fill="url(#rabbitFur)"/>
+     <path d="M133 221Q180 243 225 221L239 305Q181 330 122 306Z" fill="url(#rabbitJade)"/>
+     <path d="M134 222L180 258 223 222M180 258L163 316" stroke="#e6cf99" stroke-width="4" stroke-linejoin="round"/>
+     <path d="M215 281Q207 298 220 307M209 291L222 291" stroke="#b9c5a0" stroke-width="2" opacity=".6"/>
+     <g class="rabbit-head">
+      <g class="rabbit-ear-left"><path d="M137 148C112 124 94 49 110 32C132 10 163 79 164 133Z" fill="url(#rabbitFur)" stroke="#e5deca" stroke-width="2"/><path d="M139 131C123 107 109 58 117 48C129 47 148 100 150 131Z" fill="url(#rabbitEar)"/></g>
+      <g class="rabbit-ear-right"><path d="M188 133C181 88 196 14 219 22C247 32 222 116 212 146Z" fill="url(#rabbitFur)" stroke="#e5deca" stroke-width="2"/><path d="M198 130C197 96 205 43 216 40C229 46 213 107 207 132Z" fill="url(#rabbitEar)"/></g>
+      <path d="M118 139C139 110 205 104 237 140C255 160 262 203 236 223C212 244 145 249 118 224C94 203 96 163 118 139Z" fill="url(#rabbitFur)" stroke="#e5deca" stroke-width="2"/>
+      <path d="M121 160Q129 151 137 154M210 153Q222 151 229 160" stroke="#d4c5ad" stroke-width="3" stroke-linecap="round"/>
+      <g class="rabbit-eyes"><ellipse cx="140" cy="179" rx="5" ry="8" fill="#4d4039"/><ellipse cx="217" cy="177" rx="5" ry="8" fill="#4d4039"/><circle cx="142" cy="176" r="1.8" fill="#fffbed"/><circle cx="219" cy="174" r="1.8" fill="#fffbed"/></g>
+      <ellipse cx="123" cy="196" rx="14" ry="7" fill="#e9b5a2" opacity=".65"/><ellipse cx="230" cy="194" rx="14" ry="7" fill="#e9b5a2" opacity=".65"/>
+      <path d="M173 191Q180 186 187 191Q180 203 173 191Z" fill="#bf8e7c"/><path d="M180 199Q178 211 168 207M180 199Q182 211 192 207" stroke="#8f7360" stroke-width="2.5" stroke-linecap="round"/>
+      <g transform="translate(234 140)"><path d="M-7 8Q-16-9-4-16Q7-17 7-4Q21-11 24 0Q23 10 10 9Q17 22 6 25Q-5 25-5 12Z" fill="#f1ca78"/><circle cx="5" cy="5" r="4" fill="#ad773d"/><path d="M-9 7Q-24 9-24 20Q-12 22-8 12" fill="#80a594"/></g>
+     </g>
+     <g class="rabbit-offering">
+      <path d="M137 239Q107 228 109 248Q111 265 140 266M221 238Q252 227 251 248Q247 265 220 265" fill="url(#rabbitFur)" stroke="#ddd7c2" stroke-width="2"/>
+      <ellipse cx="180" cy="271" rx="75" ry="12" fill="#214f4c" stroke="#dbbc7d" stroke-width="2"/>
+      <path d="M108 271Q126 290 180 291Q232 290 252 271" fill="#376b62" stroke="#dbbc7d" stroke-width="2"/>
+      <g transform="translate(155 245)"><path d="M-29-6Q-34-15-23-19Q-23-29-11-26Q-5-36 4-29Q16-35 21-24Q35-24 32-12Q43-4 34 4Q39 15 26 18Q23 30 10 26Q0 34-9 27Q-23 33-26 21Q-40 19-33 7Q-44 1-29-6Z" fill="url(#cakeGold)" stroke="#b77837" stroke-width="2"/><circle r="23" fill="none" stroke="#a76c32" stroke-width="2"/><circle r="18" fill="none" stroke="#ffe2a2"/><text text-anchor="middle" y="7" fill="#925724" font-size="20" font-family="serif">福</text></g>
+      <g transform="translate(207 254) scale(.72)"><path d="M-29-6Q-34-15-23-19Q-23-29-11-26Q-5-36 4-29Q16-35 21-24Q35-24 32-12Q43-4 34 4Q39 15 26 18Q23 30 10 26Q0 34-9 27Q-23 33-26 21Q-40 19-33 7Q-44 1-29-6Z" fill="url(#cakeGold)" stroke="#b77837" stroke-width="2"/><circle r="22" fill="none" stroke="#a76c32" stroke-width="2"/><path d="M0-14V14M-14 0H14M-10-10L10 10M10-10L-10 10" stroke="#f9da97" stroke-width="3"/><circle r="5" fill="#ba813a"/></g>
+      <ellipse cx="117" cy="268" rx="14" ry="9" transform="rotate(15 117 268)" fill="url(#rabbitFur)"/><ellipse cx="244" cy="268" rx="14" ry="9" transform="rotate(-15 244 268)" fill="url(#rabbitFur)"/>
+     </g>
+    </g>
+   </svg></div>
+   <svg class="welcome-cloud cloud-front" viewBox="0 0 440 90" fill="none"><path d="M10 62C59 35 101 78 144 59S220 37 264 58 352 31 430 51" stroke="currentColor" stroke-width="23" stroke-linecap="round"/></svg>
+  </div>
+  <div class="welcome-copy"><p class="welcome-from">玉兔捎来一份甜</p><h2 id="rabbitTitle">月满人团圆</h2><p id="rabbitBlessing">中秋喜乐安康，所念皆如愿。</p><span class="welcome-seal" aria-hidden="true">中秋</span></div>
+ </div>
+</dialog>
 <canvas id="rain" aria-hidden="true"></canvas>
 <canvas id="atmosphere" aria-hidden="true"></canvas>
 <div id="wishBubbles" class="wish-bubbles" aria-hidden="true"></div>
@@ -28,7 +76,7 @@
   <section class="letter" aria-label="给你的中秋祝福"><p class="to" id="to"></p><p class="message" id="message"></p><p class="signature" id="signature"></p><div class="actions"><button type="button" class="primary" id="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span id="startText">开启月光祝福</span></button><button type="button" class="secondary" id="edit">写下我的祝福</button></div><p class="hint" id="status" role="status" aria-live="polite">轻点开启，让思念化作漫天星光</p></section>
  </main>
  <section class="guestbook" aria-labelledby="guestbookTitle"><div class="guestbook-head"><h2 id="guestbookTitle">把祝福留在月光里</h2><div class="guestbook-actions"><button class="secondary bubble-toggle" id="toggleBubbles" type="button" aria-pressed="false">收起气泡</button><button class="secondary refresh" id="refreshMessages" type="button">刷新留言</button></div></div><p class="guestbook-note">与大家分享一份团圆心意。</p><form id="guestbookForm"><div><label for="guestName">你的昵称</label><input id="guestName" name="name" maxlength="24" required placeholder="一位赏月的人" autocomplete="nickname"></div><div><label for="guestMessage">给大家的祝福</label><textarea id="guestMessage" name="body" maxlength="280" required placeholder="愿我们岁岁平安，年年团圆。"></textarea></div><div class="send-row"><button id="sendMessage" class="primary" type="submit">留下祝福</button><p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite">正在寻找月光里的留言…</p></div></form><details class="wish-history"><summary>翻阅大家的祝福</summary><ul class="guestbook-list" id="guestbookList" aria-label="大家的留言"></ul></details></section>
- <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></footer>
+ <footer class="footer"><p>愿每一份想念，都能抵达。<br>HAPPY MID-AUTUMN FESTIVAL</p><div class="footer-actions"><button type="button" class="download replay-welcome" id="replayWelcome">重看玉兔送福</button><button type="button" class="download" id="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>保存这份祝福</button></div></footer>
 </div>
 <dialog id="editor" aria-labelledby="editorTitle"><form id="editForm"><div class="dialog-head"><h2 id="editorTitle">写一封月夜来信</h2><button type="button" class="close" id="close" aria-label="关闭编辑">×</button></div><p class="dialog-desc">把名字写进月光，让这一份祝福只属于你们。</p><label for="recipient">寄给谁</label><input id="recipient" maxlength="24" placeholder="亲爱的你" autocomplete="off"><label for="greeting">想说的话</label><textarea id="greeting" maxlength="160" placeholder="愿你所念皆团圆，所行皆坦途。"></textarea><label for="sender">你的署名</label><input id="sender" maxlength="24" placeholder="惦念你的人" autocomplete="off"><div class="form-actions"><button type="submit" class="primary">把祝福写进月光</button></div><p class="form-tip">写好后，点页面底部“保存这份祝福”，即可保存含有这些文字的网页文件。</p></form></dialog>
 <div class="toast" id="toast" role="status"></div>
@@ -36,6 +84,7 @@
 <script src="config.js"></script>
 <script src="message-api.js"></script>
 <script src="animations.js"></script>
+<script src="welcome.js"></script>
 <script src="bubbles.js"></script>
 <script src="guestbook.js"></script>
 </body>

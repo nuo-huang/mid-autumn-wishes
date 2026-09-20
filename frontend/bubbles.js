@@ -94,7 +94,7 @@
   const typing=!!document.activeElement?.closest('input,textarea,dialog')||!!document.querySelector('.wish-history[open]');
   const stopped=document.hidden||document.body.classList.contains('paused');
   if(celebration&&!document.hidden&&(!stopped||reduced.matches)){celebration.age+=dt;if(celebration.age>=10){celebration.node.remove();celebration=null;layoutDirty=true;}}
-  const blocked=stopped||reduced.matches||typing||hiddenByUser;
+  const blocked=stopped||reduced.matches||typing||hiddenByUser||document.body.classList.contains('welcoming');
   layer.hidden=blocked;
   if(layoutDirty&&!blocked){for(const node of layer.children)node.style.visibility='hidden';for(const node of layer.children)scatter(node);layoutDirty=false;}
   if(!blocked)queue.tick(dt);

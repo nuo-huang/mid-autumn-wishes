@@ -28,3 +28,50 @@ dialog{width:min(440px,calc(100% - 28px));max-height:calc(100% - 32px);padding:2
 @media(prefers-reduced-motion:reduce){.wish-bubbles{display:none}.topbar,.intro,.scene,.letter,.guestbook,.footer{animation:none}}
 .guestbook-actions{display:flex;gap:8px;flex-wrap:wrap}.guestbook .bubble-toggle{min-height:44px;padding:0 14px}.bubble-toggle[aria-pressed="true"]{color:var(--gold);border-color:#e9c88970}.wish-celebration{grid-column:1/-1;margin-top:18px;padding:18px 22px;border:1px solid #edcf9270;border-radius:22px 22px 22px 6px;background:linear-gradient(135deg,#3d4434aa,#142d35);box-shadow:0 0 30px #efca7520;animation:moon-arrival .8s ease both;overflow-wrap:anywhere}.wish-celebration strong{font-weight:400;color:var(--gold);font-size:13px;letter-spacing:2px}.wish-celebration p{white-space:pre-wrap;font-size:14px;line-height:1.8;margin:9px 0 0}.wish-lantern{position:fixed;width:140px;height:auto;z-index:7;pointer-events:none;filter:drop-shadow(0 0 20px #efb74c66);will-change:transform,top;opacity:0}@media(max-width:759px){.guestbook-head{align-items:flex-start;flex-direction:column;gap:12px}.guestbook-actions{width:100%}.guestbook-actions button{flex:1}.wish-lantern{width:110px}.wish-celebration{padding:15px 18px}.wish-celebration p{font-size:13px}}
 @media(max-width:759px){.wish-bubble{padding:8px 10px}.wish-bubble strong{font-size:8px}.wish-bubble p{font-size:10px;line-height:1.5;-webkit-line-clamp:1;margin-top:4px}}
+/* 玉兔送福：仅变换和透明度动画，内联插画同时用于离线贺卡。 */
+body.welcoming{overflow:hidden}
+.rabbit-welcome{position:fixed;inset:0;margin:0;padding:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border:0;border-radius:0;overflow:auto;background:radial-gradient(ellipse at 50% 39%,#25443f 0%,#112b30 40%,#091a24 80%);color:#f9edcf;box-shadow:none;opacity:1;transition:opacity .55s ease}
+.rabbit-welcome::backdrop{background:transparent;backdrop-filter:none}
+.rabbit-welcome[open]{display:grid;place-items:center}
+.rabbit-welcome.welcome-leaving{opacity:0;pointer-events:none}
+.welcome-skip{position:absolute;z-index:3;right:max(24px,env(safe-area-inset-right));top:max(22px,env(safe-area-inset-top));border:1px solid #e9c88945;border-radius:24px;padding:0 19px;min-height:44px;background:#0d252977;color:#decda7;font-family:inherit;font-size:12px;letter-spacing:2px;cursor:pointer}
+.welcome-skip span{margin-left:8px}
+.welcome-skip:hover{background:#31504d}
+.welcome-skip:focus-visible{outline:2px solid #f1ce8b;outline-offset:4px}
+.welcome-composition{width:min(520px,100%);text-align:center;padding:76px 24px 35px;box-sizing:border-box}
+.welcome-overline{margin:0 0 10px;font-size:10px;letter-spacing:4px;color:#cebc93;animation:welcome-words 1s ease .2s both}
+.rabbit-stage{position:relative;width:min(380px,100%);aspect-ratio:1.05;margin:auto;isolation:isolate}
+.welcome-moon{position:absolute;z-index:-2;width:77%;aspect-ratio:1;left:11.5%;top:6%;border-radius:50%;background:radial-gradient(circle at 38% 32%,#fff0bb,#e0be74 66%,#bc985a);box-shadow:0 0 70px #f5d98c20,inset -9px -8px 28px #92733e30;opacity:.82;animation:welcome-words 1.2s ease both}
+.welcome-moon::after{content:"";position:absolute;inset:8%;border:1px solid #fff5d126;border-radius:50%}
+.welcome-orbit{position:absolute;inset:0 3% 4%;border:1px solid #dbc58b2b;border-radius:50%;transform:rotate(-24deg)}
+.welcome-orbit::after{content:"";position:absolute;left:8%;top:18%;width:5px;height:5px;border-radius:50%;background:#f8d995;box-shadow:0 0 12px #ffe6a6}
+.rabbit-arrival{position:absolute;inset:0;animation:rabbit-enter 1.65s cubic-bezier(.22,.75,.25,1) both}
+.jade-rabbit{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 12px #09292e2b)}
+.rabbit-head{transform-origin:180px 225px;animation:rabbit-nod 2.7s ease 1.3s both}
+.rabbit-ear-left{transform-origin:151px 142px;animation:rabbit-ear 2.8s ease 1s both}
+.rabbit-ear-right{transform-origin:203px 141px;animation:rabbit-ear 2.8s ease 1.2s both;--ear-angle:5deg}
+.rabbit-bob{transform-origin:180px 320px;animation:rabbit-breathe 2.4s ease-in-out 1.5s infinite}
+.rabbit-offering{transform-origin:180px 278px;animation:rabbit-offer 2.7s ease 1.3s both}
+.welcome-star{position:absolute;color:#efcd81;animation:welcome-glimmer 2.6s ease-in-out infinite}
+.star-a{left:9%;top:29%;font-size:16px}.star-b{right:5%;top:50%;font-size:21px;animation-delay:.7s}.star-c{right:17%;top:9%;font-size:10px;animation-delay:1.2s}
+.welcome-cloud{position:absolute;left:-8%;width:116%;color:#a4c5b9;pointer-events:none;animation:welcome-cloud-drift 6s ease-in-out both}
+.cloud-back{top:58%;opacity:.15;z-index:-1}.cloud-front{bottom:-2%;opacity:.25;animation-direction:reverse}
+.welcome-copy{position:relative;margin:8px 0 0;animation:welcome-words 1s ease 1.1s both}
+.welcome-from{color:#d5c9a9;font-size:12px;letter-spacing:4px;margin:0 0 13px}
+.rabbit-welcome h2{font-family:"Songti SC","STSong","SimSun",serif;font-size:clamp(28px,5vw,40px);font-weight:400;letter-spacing:7px;margin:0 0 13px;color:#f8dfab}
+#rabbitBlessing{font-size:13px;color:#cad3c7;letter-spacing:2px;line-height:1.8;margin:0}
+.welcome-seal{display:inline-block;margin-top:20px;padding:4px 5px;border:1px solid #bb825e;color:#dba380;font:12px "SimSun",serif;letter-spacing:3px;transform:rotate(-5deg)}
+.footer-actions{display:flex;gap:18px;align-items:center}.replay-welcome{color:#a7b8ae;font-size:11px}
+@keyframes rabbit-enter{0%{opacity:0;transform:translate(-75px,66px) rotate(-9deg)}45%{opacity:1;transform:translate(-24px,-9px) rotate(3deg)}72%{transform:translate(3px,3px) rotate(-2deg)}100%{opacity:1;transform:translate(0,0) rotate(0)}}
+@keyframes rabbit-nod{0%,100%{transform:rotate(0)}38%,60%{transform:translateY(6px) rotate(7deg)}}
+@keyframes rabbit-ear{0%,100%{transform:rotate(0)}40%,62%{transform:rotate(var(--ear-angle,-7deg))}}
+@keyframes rabbit-offer{0%,100%{transform:translateY(0)}38%,60%{transform:translateY(-8px)}}
+@keyframes rabbit-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes welcome-words{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes welcome-glimmer{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:.95;transform:scale(1)}}
+@keyframes welcome-cloud-drift{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+.welcome-held *{animation-play-state:paused!important}
+.welcome-still *{animation:none!important;transition:none!important}
+@media(max-width:759px){.footer{flex-wrap:wrap}.footer-actions{gap:12px;flex-wrap:wrap}.footer-actions .download{padding-left:0}.welcome-composition{padding:72px 22px 24px}.rabbit-stage{width:min(330px,100%)}.welcome-overline{font-size:9px;letter-spacing:2px}.welcome-skip{right:16px;top:max(14px,env(safe-area-inset-top))}}
+@media(max-height:650px){.welcome-composition{padding-top:60px;padding-bottom:18px}.rabbit-stage{width:min(245px,48vh)}.welcome-overline{margin-bottom:0}.welcome-from{margin-bottom:8px;font-size:10px}.rabbit-welcome h2{font-size:27px;margin-bottom:8px}.welcome-seal{margin-top:10px}}
+@media(max-height:450px) and (min-width:550px){.welcome-composition{width:min(750px,100%);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:48px 38px 18px}.welcome-overline{grid-column:1/-1}.rabbit-stage{width:min(245px,65vh)}.welcome-copy{margin:0}.welcome-skip{top:8px}}

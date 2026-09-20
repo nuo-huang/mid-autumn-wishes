@@ -64,6 +64,7 @@ const server=http.createServer(async(req,res)=>{
   '/config.js':['frontend/config.js','text/javascript'],
   '/message-api.js':['frontend/message-api.js','text/javascript'],
   '/animations.js':['frontend/animations.js','text/javascript'],
+  '/welcome.js':['frontend/welcome.js','text/javascript'],
   '/guestbook.js':['frontend/guestbook.js','text/javascript'],
   '/bubbles.js':['frontend/bubbles.js','text/javascript'],
   '/offline-card.html':['frontend/offline-card.html','text/html'],

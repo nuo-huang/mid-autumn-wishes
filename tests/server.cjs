@@ -20,7 +20,7 @@ async function post(value,headers={}){return fetch(base+'/api/messages',{method:
   await start();
   assert.equal((await fetch(base+'/data/messages.sqlite')).status,404);
   assert.equal((await fetch(base+'/supabase/config.toml')).status,404);
-  for(const file of ['','styles.css','config.js','message-api.js','animations.js','guestbook.js','offline-card.html'])assert.equal((await fetch(base+'/'+file)).status,200);
+  for(const file of ['','styles.css','config.js','message-api.js','animations.js','welcome.js','guestbook.js','offline-card.html'])assert.equal((await fetch(base+'/'+file)).status,200);
   let r=await post({name:'月下测试',body:'重启后依然团圆'});assert.equal(r.status,201);const saved=(await r.json()).message;
   const injection={name:"小月'); DROP TABLE messages;--".slice(0,24),body:'<img src=x onerror=alert(1)> 中秋快乐'};
   assert.equal((await post(injection)).status,201);
