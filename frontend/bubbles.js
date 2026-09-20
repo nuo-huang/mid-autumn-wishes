@@ -33,7 +33,7 @@
  const layer=document.getElementById('wishBubbles');
  if(!layer)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- let cells=[],hiddenByUser=false,celebration=null;
+ let hiddenByUser=false,celebration=null;
  const toggle=document.getElementById('toggleBubbles');
  try{hiddenByUser=localStorage.getItem('moon-hide-bubbles')==='true';}catch{}
  function toggleUI(){toggle.textContent=hiddenByUser?'显示气泡':'收起气泡';toggle.setAttribute('aria-pressed',String(hiddenByUser));layer.hidden=hiddenByUser;}
@@ -42,26 +42,26 @@
  const intersects=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
  function scatter(node){
   const mobile=innerWidth<760,vw=document.documentElement.clientWidth,variation=Number(node.dataset.variation);
-  node.style.width=Math.min(vw*.36,mobile?100:218)*(.88+variation*.12)+'px';
+  node.style.width=Math.min(vw*(mobile?.44:.24),mobile?166:216)*(.94+variation*.06)+'px';
   const width=node.offsetWidth,height=node.offsetHeight;
-  const obstacles=[...document.querySelectorAll('h1,.moon,.eyebrow,.subtitle,.message,.to,.signature,.heart-note,.scene-caption,.moon-label,.hint,.guestbook-head,.guestbook-note,.wish-celebration,button,input,textarea,summary,label')].flatMap(n=>{
-   if(n.matches('h1,.subtitle,.message,.to,.signature,.guestbook-note,label')){
-    const walker=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),rects=[];
-    while(walker.nextNode())if(walker.currentNode.textContent.trim()){const range=document.createRange();range.selectNodeContents(walker.currentNode);rects.push(...range.getClientRects());}
-    return rects;
-   }
-   return [n.getBoundingClientRect()];
-  }).filter(r=>r.width&&r.height&&r.bottom>0&&r.top<innerHeight);
-  for(const other of layer.children)if(other!==node&&other.style.visibility!=='hidden')obstacles.push(other.getBoundingClientRect());
+  // 整段正文作为留白区，气泡不再挤进标题的字缝；互相避让时使用原始位置覆盖完整漂移幅度。
+  const obstacles=[...document.querySelectorAll('.topbar,.intro,.letter,.moon,.heart-note,.scene-caption,.moon-label,.seal,.guestbook,.footer,.wish-celebration,button,input,textarea')]
+   .map(n=>n.getBoundingClientRect()).filter(r=>r.width&&r.height&&r.bottom>0&&r.top<innerHeight);
+  for(const other of layer.children)if(other!==node&&other.style.visibility!=='hidden')obstacles.push({left:other.offsetLeft-10,right:other.offsetLeft+other.offsetWidth+10,top:other.offsetTop-14,bottom:other.offsetTop+other.offsetHeight+14});
+  const scene=document.getElementById('scene').getBoundingClientRect();
+  const inset=mobile?18:32;
+  const top=Math.max(76,mobile?scene.top+12:76),bottom=Math.min(innerHeight-height-24,mobile?scene.bottom-height-20:innerHeight-height-24);
   const candidates=[];
-  for(let y=76;y<innerHeight-height-22;y+=12){
-   const left=6+variation*5,right=vw-width-6-variation*5;
-   candidates.push({x:left,y},{x:right,y});
+  const preferRight=Number(node.dataset.slot)%2===1;
+  const targetX=preferRight?vw-inset-width:inset;
+  const targetY=scene.top+scene.height*(preferRight?.73:.04)+variation*12;
+  const xs=mobile?[inset+variation*7,vw-inset-width-variation*7]:Array.from({length:9},(_,i)=>inset+(vw-width-inset*2)*i/8);
+  for(let y=top;y<=bottom;y+=10){
+   for(const x of xs)candidates.push({x,y});
   }
-  // 候选点只沿两侧移动，保留月亮与正文；空位不够时暂缓展示。
-  candidates.sort((a,b)=>Math.abs(a.y-(76+Number(node.dataset.horizontal)*(innerHeight-150)))-Math.abs(b.y-(76+Number(node.dataset.horizontal)*(innerHeight-150))));
-  if(Number(node.dataset.cell)%2)candidates.forEach((p,i)=>{if(i%2===0&&i+1<candidates.length)[candidates[i],candidates[i+1]]=[candidates[i+1],candidates[i]];});
-  const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-6,right:p.x+width+6,top:p.y-18,bottom:p.y+height+18},r)));
+  const score=p=>Math.abs(p.y-targetY)+Math.abs(p.x-targetX)*.45;
+  candidates.sort((a,b)=>score(a)-score(b));
+  const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-10,right:p.x+width+10,top:p.y-16,bottom:p.y+height+16},r)));
   node.style.visibility=spot?'visible':'hidden';
   if(spot){node.style.left=spot.x+'px';node.style.top=spot.y+'px';}
  }
@@ -69,13 +69,12 @@
   batchSize:()=> (innerWidth<760?5:6)+Math.floor(Math.random()*3),
   show(message,slot){
    const bubble=document.createElement('div'),name=document.createElement('strong'),body=document.createElement('p');
-   if(slot===0){cells=Array.from({length:10},(_,i)=>i);for(let i=9;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cells[i],cells[j]]=[cells[j],cells[i]];}}
-   bubble.className='wish-bubble';bubble.dataset.cell=String(cells[slot]);bubble.dataset.variation=String(Math.random());bubble.dataset.horizontal=String(Math.random());bubble.dataset.drift=String(Math.random()*Math.PI*2);
-   name.textContent=message.name+' · 寄来一份祝福';
+   bubble.className='wish-bubble';bubble.dataset.slot=String(slot);bubble.dataset.variation=String(Math.random());bubble.dataset.drift=String(Math.random()*Math.PI*2);
+   name.textContent=message.name;
    body.textContent=message.body;bubble.append(name,body);layer.append(bubble);scatter(bubble);return bubble;
   },
   remove:node=>node.remove(),
-  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translate(${Math.sin(age*.55+Number(node.dataset.drift))*3}px,${8-age*1.6}px)`;}
+  paint(node,age){node.style.opacity=String(Math.max(0,Math.min(1,age/.9,(10-age)/1.2)));node.style.transform=`translate(${Math.sin(age*.4+Number(node.dataset.drift))*2}px,${4-age*.8}px)`;}
  });
  let layoutDirty=false;
  addEventListener('resize',()=>{layoutDirty=true;});

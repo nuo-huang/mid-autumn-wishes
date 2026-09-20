@@ -144,9 +144,8 @@
   draw(dt);raf=requestAnimationFrame(tick);
  }
  function schedule(){if(!raf&&!paused&&!document.hidden){last=0;raf=requestAnimationFrame(tick);}}
- function motionUI(){document.body.classList.toggle('paused',paused||document.hidden);$('motion').setAttribute('aria-pressed',String(paused));$('motion').setAttribute('aria-label',paused?'开启动态效果':'暂停动态效果');}
+ function motionUI(){document.body.classList.toggle('paused',paused||document.hidden);}
  function setPaused(value){paused=value;motionUI();if(paused){cancelAnimationFrame(raf);raf=0;draw(0);}else schedule();}
- $('motion').addEventListener('click',()=>setPaused(!paused));
  $('start').addEventListener('click',()=>{
   if(!ctx||!rc){$('status').textContent='中秋快乐，愿你与所爱岁岁团圆';return;}
   $('scene').classList.remove('complete');$('scene').classList.add('active');
@@ -176,5 +175,5 @@
   const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='中秋快乐-孔明灯月夜.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('已生成网页文件，请在浏览器下载中查看。');
   }catch{toast('暂时无法保存，请检查网络后重试。');}finally{button.disabled=false;}
  });
- if(ctx&&rc){resize();motionUI();schedule();}else{$('motion').hidden=true;$('status').textContent='月色与你，皆是温柔。';}
+ if(ctx&&rc){resize();motionUI();schedule();}else{$('status').textContent='月色与你，皆是温柔。';}
 })();

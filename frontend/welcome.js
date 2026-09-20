@@ -3,7 +3,7 @@
  const dialog=document.getElementById('rabbitWelcome');
  if(!dialog||typeof dialog.showModal!=='function')return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const replay=document.getElementById('replayWelcome'),skip=document.getElementById('skipWelcome');
+ const replay=document.getElementById('replayWelcome');
  let timer=0,age=0,last=0,returnFocus=null;
  function finish(){
   clearInterval(timer);timer=0;
@@ -30,7 +30,6 @@
    else if(!reduced.matches&&age>=duration-.55)dialog.classList.add('welcome-leaving');
   },100);
  }
- skip.addEventListener('click',finish);
  dialog.addEventListener('cancel',e=>{e.preventDefault();finish();});
  replay.addEventListener('click',open);
  document.addEventListener('visibilitychange',()=>{last=performance.now();dialog.classList.toggle('welcome-held',document.hidden);});
