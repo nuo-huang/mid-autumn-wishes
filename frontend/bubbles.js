@@ -23,8 +23,10 @@
      nextAt=elapsed+15;
     }
     if(batchIndex<batch.length&&elapsed-batchStart>=batchIndex*.5){
-     const message=batch[batchIndex],node=show(message,batchIndex++);paint(node,0);
-     active.push({message,node,start:elapsed});
+     const message=batch[batchIndex],node=show(message,batchIndex++);
+     // 没有阅读空间的祝福回到队列，真正出现后才开始计算十秒。
+     if(node){paint(node,0);active.push({message,node,start:elapsed});}
+     else pending.push(message);
     }
    }
   };
@@ -53,7 +55,7 @@
   }
   const scene=document.getElementById('scene').getBoundingClientRect();
   const inset=mobile?18:32;
-  const top=Math.max(76,mobile?scene.top+12:76),bottom=Math.min(innerHeight-height-24,mobile?scene.bottom-height-20:innerHeight-height-24);
+  const top=Math.max(76,mobile?scene.top+8:76),bottom=Math.min(innerHeight-height-24,mobile?scene.bottom-height-8:innerHeight-height-24);
   const candidates=[];
   const preferRight=Number(node.dataset.slot)%2===1;
   const targetX=preferRight?vw-inset-width:inset;
@@ -62,20 +64,28 @@
   for(let y=top;y<=bottom;y+=10){
    for(const x of xs)candidates.push({x,y});
   }
+  // 补上留白边界，避免十像素采样恰好错过可以容纳长留言的位置。
+  for(const y of [bottom,...obstacles.map(r=>r.bottom+12)]){
+   if(y>=top&&y<=bottom)for(const x of xs)candidates.push({x,y});
+  }
   const score=p=>Math.abs(p.y-targetY)+Math.abs(p.x-targetX)*.45;
   candidates.sort((a,b)=>score(a)-score(b));
-  const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-10,right:p.x+width+10,top:p.y-16,bottom:p.y+height+16},r)));
+  const spot=candidates.find(p=>!obstacles.some(r=>intersects({left:p.x-10,right:p.x+width+10,top:p.y-12,bottom:p.y+height+12},r)));
   node.style.visibility=spot?'visible':'hidden';
   if(spot){node.style.left=spot.x+'px';node.style.top=spot.y+'px';node.dataset.scrollY=String(scrollY);}
+  return !!spot;
  }
  const ease=value=>{const t=Math.max(0,Math.min(1,value));return t*t*(3-2*t);};
  const queue=createQueue({
   batchSize:()=> (innerWidth<760?5:6)+Math.floor(Math.random()*3),
   show(message,slot){
+   if([...layer.children].filter(node=>node.style.visibility==='visible').length>=(innerWidth<760?3:5))return null;
    const bubble=document.createElement('div'),name=document.createElement('strong'),body=document.createElement('p');
    bubble.className='wish-bubble';bubble.dataset.slot=String(slot);bubble.dataset.variation=String(Math.random());bubble.dataset.drift=String(Math.random()*Math.PI*2);
    name.textContent=message.name;
-   body.textContent=message.body;bubble.append(name,body);layer.append(bubble);scatter(bubble);return bubble;
+   body.textContent=message.body;bubble.append(name,body);layer.append(bubble);
+   if(!scatter(bubble)){bubble.remove();return null;}
+   return bubble;
   },
   remove:node=>node.remove(),
   paint(node,age){

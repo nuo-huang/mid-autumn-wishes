@@ -83,18 +83,18 @@
   // 氛围层独立覆盖整个视口，月亮和爱心仍使用贺卡内的局部坐标。
   const w=vw,h=vh;
   if(!ac)return;ac.clearRect(0,0,w,h);
-  cloudBand(h*(.2+Math.sin(elapsed*.055)*.014),4,w*.18,.48,.38);
+  cloudBand(h*(.2+Math.sin(elapsed*.055)*.014),4,w*.18,.32,.38);
   for(const [i,lamp] of lanterns.entries()){
    const progress=(elapsed/(lamp.duration*1.65)+lamp.offset)%1;
    const fade=Math.min(1,progress/.12,(1-progress)/.15);
    const size=Math.min(w,h*1.1,700)*lamp.size*(1-progress*.24);
    const x=w*lamp.x+Math.sin(elapsed*.23+i*1.9)*w*.024;
    const y=h*(1.08-progress*1.2);
-   ac.save();ac.globalAlpha=lamp.alpha*fade;ac.translate(x,y);ac.rotate(Math.sin(elapsed*.32+i)*.065);
+   ac.save();ac.globalAlpha=lamp.alpha*fade*.72;ac.translate(x,y);ac.rotate(Math.sin(elapsed*.32+i)*.065);
    ac.drawImage(lanternArt,-size*.5,-size*.65,size,size*1.3);ac.restore();
   }
-  cloudBand(h*(.54+Math.sin(elapsed*.043+2)*.018),-6,w*.7,.58,.44);
-  cloudBand(h*(.86+Math.sin(elapsed*.038+4)*.012),7,w*.31,.72,.4);
+  cloudBand(h*(.54+Math.sin(elapsed*.043+2)*.018),-6,w*.7,.39,.44);
+  cloudBand(h*(.86+Math.sin(elapsed*.038+4)*.012),7,w*.31,.46,.4);
  }
  function fitCanvas(c,width,height){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);}
  function resize(){
